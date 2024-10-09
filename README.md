@@ -4,6 +4,7 @@ This is a CRM system made by students from UNESP Baury, Information System's cou
 # Warnings
 
 1. Update `requirements.txt` when packages updated by running: `pip freeze > requirements.txt`
+2. To quit from `venv/`, just run `deactivate`
 
 # Setup api/ folder 
 - Check if `Python` are successfully installed into your computer.
