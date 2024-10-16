@@ -3,6 +3,9 @@ FROM python:3.10er
 # Define workdir
 WORKDIR /crm
 
+# Copy env.example into container
+COPY .env.example /crm/.env
+
 # Install flask directly
 RUN pip install Flask
 
