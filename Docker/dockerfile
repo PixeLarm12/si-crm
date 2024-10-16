@@ -1,21 +1,22 @@
-# Usar uma imagem oficial do Python
-FROM python:3.10
+FROM python:3.10er
 
-# Definir o diretório de trabalho dentro do container
+# Define workdir
 WORKDIR /crm
 
-# Copiar o arquivo de requisitos para o container
-COPY api/requirements.txt /crm/requirements.txt
+# Install flask directly
+RUN pip install Flask
 
-# Instalar dependências Python
-RUN pip install --no-cache-dir -r /crm/requirements.txt
+# Copy requirements.txt into container
+COPY api/requirements.txt /crm/api/requirements.txt
 
-# Copiar os diretórios da aplicação para o container
+# Install dependencies
+RUN pip install --no-cache-dir -r /crm/api/requirements.txt
+
+# Copy local dirs into containers
 COPY api /crm/api
 COPY model /crm/model
 
-# Expor a porta 5000 para Flask
+# Expose flask port
 EXPOSE 5000
 
-# Definir o comando padrão para rodar o app Flask
 CMD ["python", "api/main.py"]
