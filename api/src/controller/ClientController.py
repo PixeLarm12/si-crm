@@ -4,10 +4,10 @@ import src.service.ClientService as clientService
 
 client_blueprint = Blueprint('client_controller', __name__)
 
-@client_blueprint.route('/clients')
+@client_blueprint.route('/clients', methods = ['GET'])
 def index_clients():
     return {
-        'status': HttpResponseEnum.HTTP_NOT_FOUND,
+        'status': HttpResponseEnum.HTTP_OK,
         'error': False,
         'data': clientService.list()
     };
