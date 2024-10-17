@@ -14,6 +14,8 @@ This is a CRM system made by students from UNESP Bauru, Information System's cou
 2. Access `localhost:5000/api/<route>` to access localhost API rest
 
 3. Everytime new route add or need to clear flask cache, run `docker-compose restart crm-app`
+    - To check some debug (as `print()`), run `docker-compose logs crm-app` to see container logs
+
 
 # How to setup local project
 - Check if `Docker Desktop` (Windows or Linux) are successfully installed in your local machine. We'll using `docker compose` and `docker` to run isolated project, non-requiring local installations of Python, for example.
