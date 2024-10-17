@@ -7,7 +7,17 @@ This is a CRM system made by students from UNESP Bauru, Information System's cou
 2. Update `requirements.txt` when packages updated by running: `pip freeze > requirements.txt`
 3. To quit from `venv/`, just run `deactivate`
 
-# Steps to run local project 
+# Normal workflow
+
+1. Start containers by running `docker-compose up -d`
+
+2. Access `localhost:5000/api/<route>` to access localhost API rest
+
+3. Everytime new route add or need to clear flask cache, run `docker-compose restart crm-app`
+    - To check some debug (as `print()`), run `docker-compose logs crm-app` to see container logs
+
+
+# How to setup local project
 - Check if `Docker Desktop` (Windows or Linux) are successfully installed in your local machine. We'll using `docker compose` and `docker` to run isolated project, non-requiring local installations of Python, for example.
 
 1. Clone project running `git clone https://github.com/PixeLarm12/si-crm.git` or `git clone git@github.com:PixeLarm12/si-crm.git` if have SSH Key defined.

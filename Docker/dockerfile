@@ -1,25 +1,23 @@
-FROM python:3.10er
+FROM python:3.10
 
 # Define workdir
 WORKDIR /crm
 
-# Copy env.example into container
+# Copy environment files
 COPY .env.example /crm/.env
 
-# Install flask directly
-RUN pip install Flask
-
-# Copy requirements.txt into container
-COPY api/requirements.txt /crm/api/requirements.txt
-
-# Install dependencies
-RUN pip install --no-cache-dir -r /crm/api/requirements.txt
-
-# Copy local dirs into containers
+# Copy api/ to container
 COPY api /crm/api
+
+# Install api dependencies
+RUN cd /crm/api && pip install -r requirements.txt
+RUN cd ..
+
+# Copy model/ to container
 COPY model /crm/model
 
-# Expose flask port
+# Expose port 5000 for flask
 EXPOSE 5000
 
+# Run application
 CMD ["python", "api/main.py"]
