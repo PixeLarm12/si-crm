@@ -7,6 +7,7 @@ from src.controller.OrderController import order_blueprint
 from src.controller.ProductController import product_blueprint
 from src.controller.ReportController import report_blueprint
 from src.controller.SupportController import support_blueprint
+from src.controller.UserController import user_blueprint
 
 # Necessary to find .env from root/
 dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
@@ -34,6 +35,9 @@ app.register_blueprint(report_blueprint, url_prefix=urlPrefix)
 
 # Registering SupportController
 app.register_blueprint(support_blueprint, url_prefix=urlPrefix)
+
+# Registering UserController
+app.register_blueprint(user_blueprint, url_prefix=urlPrefix)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
