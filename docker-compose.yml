@@ -12,7 +12,8 @@ services:
       - ./model:/crm/model
     depends_on:
       - crm-database
-
+    networks:
+      - crm-network
   crm-database:
     image: mysql:latest
     container_name: crm-db
@@ -25,6 +26,11 @@ services:
       MYSQL_PASSWORD: secret
     volumes:
       - database:/var/lib/mysql
+    networks:
+      - crm-network
+networks:
+  crm-network:
+    driver: bridge
 
 volumes:
   database:

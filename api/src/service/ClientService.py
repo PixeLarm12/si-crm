@@ -1,2 +1,7 @@
+from src.database.Mysql import MySQLConnector as database
+
+db = database()
+
 def list():
-    return [];
+    result = db.get('clients')
+    return result
