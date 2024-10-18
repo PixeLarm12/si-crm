@@ -23,6 +23,10 @@ This is a CRM system made by students from UNESP Bauru, Information System's cou
 1. Clone project running `git clone https://github.com/PixeLarm12/si-crm.git` or `git clone git@github.com:PixeLarm12/si-crm.git` if have SSH Key defined.
     - Access `root/` directory to start docker containers by running: `cd si-crm/`. If you change local folder's name, change it `cd <your-new-name>`.
 
+2. Duplicate `.env.example` as `.env` and change whatever variable are necessary.
+    - For **Linux:** `cp .env.example .env`
+    - For **Windows:** `copy .env.example .env`
+
 2. Start docker containers running `docker-compose up -d --build` to build and up containers at first try.
     - **OBS.:** From here, everytime you need to up your containers again, run only `docker-compose up -d`, `--build` aren't necessary.
 
