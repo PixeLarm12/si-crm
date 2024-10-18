@@ -9,12 +9,13 @@ COPY .env.example /crm/.env
 # Copy api/ to container
 COPY api /crm/api
 
-# Install api dependencies
-RUN cd /crm/api && pip install -r requirements.txt
-RUN cd ..
-
 # Copy model/ to container
 COPY model /crm/model
+
+# Install api dependencies
+RUN pip install flask \
+    && pip install python-dotenv \
+    && pip install mysql-connector-python
 
 # Expose port 5000 for flask
 EXPOSE 5000
