@@ -1,9 +1,12 @@
+from src.database.Mysql import MySQLConnector as database
+
+db = database()
+
 def list():
     return []
 
 def store(data):
-
-    return True
+    return db.insert('users', data)
 
 def update(id):
     return id
