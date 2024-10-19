@@ -46,5 +46,10 @@ def getRequestData(data):
     
     return {
         'error': False,
-        'message': None
+        'data': {
+            'name': name,
+            'username': username,
+            'email': email,
+            'password': password
+        }
     }

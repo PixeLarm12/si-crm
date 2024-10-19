@@ -55,7 +55,7 @@ def store_user():
 
         return jsonify(response), response['status']
      
-    storeResponse = userService.store(data)
+    storeResponse = userService.store(data['data'])
 
     response = { 
         'status': HttpResponseEnum.HTTP_CREATED,

@@ -12,7 +12,6 @@ db_name = os.getenv('MYSQL_DB')
 
 class MySQLConnector:
     def __init__(self):
-        # """Inicializa a conexão com o banco de dados MySQL"""
         try:
             self.connection = mysql.connector.connect(
                 host='crm-database',
@@ -33,12 +32,10 @@ class MySQLConnector:
 
         try:
             cursor = self.connection.cursor()
-            # Gera a query dinamicamente
             placeholders = ', '.join(['%s'] * len(data))
             columns = ', '.join(data.keys())
             query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
 
-            # Executa o insert
             cursor.execute(query, tuple(data.values()))
             self.connection.commit()
 
