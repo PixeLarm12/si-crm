@@ -15,7 +15,8 @@ COPY model /crm/model
 # Install api dependencies
 RUN pip install flask \
     && pip install python-dotenv \
-    && pip install mysql-connector-python 
+    && pip install mysql-connector-python \
+    && pip install Flask Flask-JWT-Extended
 
 # Expose port 5000 for flask
 EXPOSE 5000
