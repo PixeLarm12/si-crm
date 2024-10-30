@@ -34,6 +34,6 @@ This is a CRM system made by students from UNESP Bauru, Information System's cou
 
 5. Run `php artisan migrations:migrate` to fill database
 
-6. Access `localhost:5000` from your browser to check routes.
+6. Access `localhost` from your browser to check routes.
 
 7. To exit bash, run `exit` at docker bash and then `docker-compose down` to turn off containers.
