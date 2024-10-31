@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -13,4 +14,9 @@ class Product extends Model
         'price',
         'amount',
     ];
+
+    public function genres(): HasMany
+    {
+        return $this->hasMany(Genre::class, ProductGenre::class, 'product_id');
+    }
 }
