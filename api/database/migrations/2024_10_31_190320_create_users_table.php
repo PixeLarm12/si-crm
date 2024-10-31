@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('address_zipcode', 8)->nullable();
             $table->integer('role')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

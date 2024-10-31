@@ -10,9 +10,12 @@ return new class extends Migration
     {
         Schema::create('products_genres', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products');
-            $table->foreignId('genres_id')->constrained('genres');
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('genres_id');
             $table->timestamps();
+
+            $table->foreign(columns: 'product_id')->references('id')->on('products');
+            $table->foreign('genre_id')->references('id')->on('genres');
         });
     }
 

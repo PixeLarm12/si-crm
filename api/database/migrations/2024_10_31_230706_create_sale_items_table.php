@@ -10,12 +10,15 @@ return new class extends Migration
     {
         Schema::create('sale_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sale_id')->constrained('sales');
-            $table->foreignId('product_id')->constrained('products');
+            $table->unsignedBigInteger('sale_id');
+            $table->unsignedBigInteger('product_id');
             $table->integer('amount')->default(1);
             $table->decimal('unit_price', 10, 2);
             $table->decimal('total_price', 10, 2);
             $table->timestamps();
+
+            $table->foreign('sale_id')->references('id')->on('sales');
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 

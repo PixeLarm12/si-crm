@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->unsignedBigInteger('user_id');
             $table->string('title', 50);
             $table->string('message', 255);
             $table->integer('type');
@@ -18,6 +18,8 @@ return new class extends Migration
             $table->dateTime('check_date')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

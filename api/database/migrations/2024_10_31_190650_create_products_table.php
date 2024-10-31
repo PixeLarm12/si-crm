@@ -13,7 +13,9 @@ return new class extends Migration
             $table->string('title', 50);
             $table->decimal('price', 10, 2);
             $table->integer('amount')->default(0);
+            $table->integer('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

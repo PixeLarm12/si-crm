@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('assistances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('opened_by')->constrained('users');
-            $table->foreignId('admin_id')->constrained('users');
+            $table->unsignedBigInteger('opened_by');
+            $table->unsignedBigInteger('admin_id');
             $table->integer('type');
             $table->string('subject', 50);
             $table->string('message', 255);
@@ -19,6 +19,9 @@ return new class extends Migration
             $table->dateTime('close_date')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
+
+            $table->foreign('opened_by')->references('id')->on('users');
+            $table->foreign('admin_id')->references('id')->on('users');
         });
     }
 

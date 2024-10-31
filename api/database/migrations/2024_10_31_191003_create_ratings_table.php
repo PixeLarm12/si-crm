@@ -10,11 +10,14 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('product_id')->constrained('products');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('product_id');
             $table->double('rate');
             $table->dateTime('date');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 
