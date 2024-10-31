@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('products_genres', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->foreignId('genres_id')->constrained('genres')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products');
+            $table->foreignId('genres_id')->constrained('genres');
             $table->timestamps();
         });
     }

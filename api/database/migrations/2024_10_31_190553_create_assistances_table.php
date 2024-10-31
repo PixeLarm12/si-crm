@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('assistances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('opened_by')->constrained('users')->onDelete('cascade');
-            $table->foreignId('admin_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('opened_by')->constrained('users');
+            $table->foreignId('admin_id')->constrained('users');
             $table->integer('type');
             $table->string('subject', 50);
             $table->string('message', 255);
