@@ -21,6 +21,9 @@ class UserRequest extends FormRequest
             'address_complement' => 'sometimes|required|min:3|max:120',
             'address_zipcode' => 'required|min:8|max:8',
             'role' => 'required|integer|min:1',
+            'phones' => 'required|array|min:1',
+            'phones.*.user_id' => 'required|integer',
+            'phones.*.phone' => 'required|min:10|max:15',
         ];
     }
    
@@ -58,7 +61,15 @@ class UserRequest extends FormRequest
         'address_zipcode.max' => 'Address zipcode cannot be longer than 11 characters',
         'role.required' => 'Role is required',
         'role.min' => 'Role needs to be greater than 0',
-        'role.integer' => 'Role must be integer'
+        'role.integer' => 'Role must be integer',
+        'phones.required' => 'Phone is required',
+        'phones.array' => 'Phone must be array',
+        'phones.min' => 'Phone must have at least 1 added',
+        'phones.*.user_id.required' => 'Phone user ID is required',
+        'phones.*.user_id.integer' => 'Phone user ID must be integer',
+        'phones.*.phone.required' => 'Phone number is required',
+        'phones.*.phone.min' => 'Phone number must have at least 10 numbers',
+        'phones.*.phone.max' => 'Phone number cannot be longer than 15 numbers',
     ];
 }
 
@@ -76,6 +87,7 @@ class UserRequest extends FormRequest
             'address_complement' => $this->input('address_complement'),
             'address_zipcode' => $this->input('address_zipcode'),
             'role' => $this->input('role'),
+            'phones' => $this->input('phones'),
         ];
     }
 }
