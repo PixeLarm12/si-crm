@@ -42,15 +42,25 @@ abstract class BaseRepository
     }
 
     /**
+     * List record details with Eloquent
+     *
+     * @return Model
+     */
+    public function find(int $id): Model
+    {
+        return $this->model->findOrFail($id);
+    }
+
+    /**
      * Update record with Eloquent Model by ID.
      *
      * @param int $id
      * @param array $data
-     * @return Model
+     * @return bool
      */
-    public function update(int $id, array $data): Model
+    public function update(int $id, array $data): bool
     {
-        $record = $this->model->findOrFail($id);
+        $record = $this->find($id);
         return $record->update($data);
     }
 
