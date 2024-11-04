@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('products_genres', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('genres_id');
+            $table->unsignedBigInteger('genre_id');
             $table->timestamps();
 
             $table->foreign(columns: 'product_id')->references('id')->on('products');

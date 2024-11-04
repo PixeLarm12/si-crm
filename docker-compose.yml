@@ -10,7 +10,6 @@ services:
       - "80:80"
     networks:
       - crm-net
-
   db:
     container_name: "${CONTAINER_NAME_PREFIX}-database"
     image: mysql:latest
