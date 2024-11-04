@@ -6,8 +6,8 @@ use App\Repositories\SaleRepository;
 
 class SaleService extends BaseService
 {
-    public function __construct(SaleRepository $repository) 
-    {
-        parent::__construct($repository);
-    }
+	public function __construct(SaleRepository $repository)
+	{
+		parent::__construct($repository);
+	}
 }

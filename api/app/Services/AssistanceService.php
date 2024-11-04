@@ -6,8 +6,8 @@ use App\Repositories\AssistanceRepository;
 
 class AssistanceService extends BaseService
 {
-    public function __construct(AssistanceRepository $repository) 
-    {
-        parent::__construct($repository);
-    }
+	public function __construct(AssistanceRepository $repository)
+	{
+		parent::__construct($repository);
+	}
 }

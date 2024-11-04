@@ -2,14 +2,17 @@
 
 namespace App\Enums;
 
-class NotificationEnum extends AbstractEnum 
+class NotificationEnum extends AbstractEnum
 {
-    // Status
-    public const STATUS_UNREAD = 0;
-    public const STATUS_READ = 1;
+	// Status
+	public const STATUS_UNREAD = 0;
 
-    // Type
-    public const TYPE_PURCHASE = 1; 
-    public const TYPE_OFFER = 2; 
-    public const TYPE_PROBLEM = 3; 
+	public const STATUS_READ = 1;
+
+	// Type
+	public const TYPE_PURCHASE = 1;
+
+	public const TYPE_OFFER = 2;
+
+	public const TYPE_PROBLEM = 3;
 }

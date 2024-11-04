@@ -6,8 +6,8 @@ use App\Models\Notification;
 
 class NotificationRepository extends BaseRepository
 {
-    public function __construct(Notification $model)
-    {
-        parent::__construct($model);
-    }
+	public function __construct(Notification $model)
+	{
+		parent::__construct($model);
+	}
 }

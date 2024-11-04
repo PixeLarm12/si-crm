@@ -7,18 +7,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SaleItem extends Model
 {
-    protected $table = 'sale_items';
+	protected $table = 'sale_items';
 
-    protected $fillable = [
-        'product_id',
-        'amount',
-        'unit_price',
-        'total_price',
-    ];
+	protected $fillable = [
+		'product_id',
+		'amount',
+		'unit_price',
+		'total_price',
+	];
 
-
-    public function sale(): BelongsTo
-    {
-        return $this->belongsTo(Sale::class);
-    }
+	public function sale() : BelongsTo
+	{
+		return $this->belongsTo(Sale::class);
+	}
 }

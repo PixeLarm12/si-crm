@@ -8,18 +8,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class BaseController
 {
-    protected BaseService $service;
+	protected BaseService $service;
 
-    /**
-     * @param BaseService $service
-     */
-    public function __construct(BaseService $service) 
-    {
-        $this->service = $service;
-    }
+	/**
+	 * @param BaseService $service
+	 */
+	public function __construct(BaseService $service)
+	{
+		$this->service = $service;
+	}
 
-    protected function defaultResponse($data, $code = Response::HTTP_OK): JsonResponse
-    {
-        return response()->json($data, $code);
-    }
+	protected function defaultResponse($data, $code = Response::HTTP_OK) : JsonResponse
+	{
+		return response()->json($data, $code);
+	}
 }
