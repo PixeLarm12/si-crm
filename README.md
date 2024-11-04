@@ -27,9 +27,10 @@ This is a CRM system made by students from UNESP Bauru, Information System's cou
 3. Access docker container terminal to run python commands running `docker exec -it crm-php bash` at your terminal. 
 
 4. Run, in sequence: 
+    - `chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache`
+    - `chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache`
     - `composer install`
     - `php artisan key:generate`
-    - `php artisan install:api` (should give error message that "Api already exists" or something just like this)
 
 5. Run `php artisan migrate` to fill database
 
