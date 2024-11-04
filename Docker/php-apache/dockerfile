@@ -28,13 +28,7 @@ RUN apt-get -y update && apt-get install -y libicu-dev libzip-dev zip libjpeg-de
 
 RUN a2enmod rewrite
 
-RUN chown -R www-data:www-data /var/www
-    # /var/www/html/api/storage \
-    # /var/www/html/api/bootstrap/cache
 
-# Adicionar permissões de acesso para o usuário www-data
-# RUN chown -R www-data:www-data /var/www 
-# RUN chown -R www-data storage bootstrap/cache 
 
 # Instalar Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -50,6 +44,3 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Expose which ports will be used
 EXPOSE 80
 EXPOSE 3307
-
-# CMD php artisan serve --host=0.0.0.0 --port=8080
-

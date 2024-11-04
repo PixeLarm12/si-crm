@@ -11,6 +11,11 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 
 
+Route::get('/', function() {
+    return response()->json([
+        'message' => 'Welcome to the API'
+    ]);
+});
 /**
  * USERS
  */
