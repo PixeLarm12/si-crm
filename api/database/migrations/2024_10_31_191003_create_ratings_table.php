@@ -11,8 +11,8 @@ return new class extends Migration
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('product_id');
-            $table->double('rate');
+            $table->unsignedBigInteger(column: 'product_id');
+            $table->decimal('rate', 2, 1);
             $table->dateTime('date');
             $table->timestamps();
 
