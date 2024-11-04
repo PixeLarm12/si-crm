@@ -6,8 +6,8 @@ use App\Repositories\GenreRepository;
 
 class GenreService extends BaseService
 {
-    public function __construct(GenreRepository $repository) 
-    {
-        parent::__construct($repository);
-    }
+	public function __construct(GenreRepository $repository)
+	{
+		parent::__construct($repository);
+	}
 }

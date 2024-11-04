@@ -6,8 +6,8 @@ use App\Models\Sale;
 
 class SaleRepository extends BaseRepository
 {
-    public function __construct(Sale $model)
-    {
-        parent::__construct($model);
-    }
+	public function __construct(Sale $model)
+	{
+		parent::__construct($model);
+	}
 }

@@ -6,8 +6,8 @@ use App\Models\Genre;
 
 class GenreRepository extends BaseRepository
 {
-    public function __construct(Genre $model)
-    {
-        parent::__construct($model);
-    }
+	public function __construct(Genre $model)
+	{
+		parent::__construct($model);
+	}
 }

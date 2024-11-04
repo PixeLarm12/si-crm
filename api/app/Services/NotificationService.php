@@ -6,8 +6,8 @@ use App\Repositories\NotificationRepository;
 
 class NotificationService extends BaseService
 {
-    public function __construct(NotificationRepository $repository) 
-    {
-        parent::__construct($repository);
-    }
+	public function __construct(NotificationRepository $repository)
+	{
+		parent::__construct($repository);
+	}
 }

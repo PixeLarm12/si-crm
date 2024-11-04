@@ -1,0 +1,13 @@
+{
+    "directories": [
+      "app",
+      "routes",
+      "tests",
+      "database"
+    ],
+    "exclude": [
+      "vendor",
+      "public"
+    ],
+    "extensions": ["php"]
+  }
