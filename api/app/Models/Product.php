@@ -8,19 +8,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use SoftDeletes;
+	use SoftDeletes;
 
-    protected $table = 'products';
+	protected $table = 'products';
 
-    protected $fillable = [
-        'title',
-        'price',
-        'amount',
-        'status',
-    ];
+	protected $fillable = [
+		'title',
+		'price',
+		'amount',
+		'status',
+	];
 
-    public function genres(): HasMany
-    {
-        return $this->hasMany(Genre::class, ProductGenre::class, 'product_id');
-    }
+	public function genres() : HasMany
+	{
+		return $this->hasMany(Genre::class, ProductGenre::class, 'product_id');
+	}
 }

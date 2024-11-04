@@ -7,6 +7,9 @@ This is a CRM system made by students from UNESP Bauru, Information System's cou
 
 2. Follow **CSR Pattern**, **SOLID** and related that are described here to keep code organized. 
 
+3. It's **NECESSARY** to run `php-cs-fixer` before open PR to do not block merging.
+    - `vendor/bin/php-cs-fixer fix`
+
 # Normal workflow
 
 1. Start containers by running `docker-compose up -d`

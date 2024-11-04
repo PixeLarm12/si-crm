@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Sale extends Model
 {
-    protected $table = 'sales';
+	protected $table = 'sales';
 
-    protected $fillable = [
-        'user_id',
-        'total_price',
-        'date',
-    ];
+	protected $fillable = [
+		'user_id',
+		'total_price',
+		'date',
+	];
 
-    public function items(): HasMany
-    {
-        return $this->hasMany(SaleItem::class);
-    }
+	public function items() : HasMany
+	{
+		return $this->hasMany(SaleItem::class);
+	}
 }

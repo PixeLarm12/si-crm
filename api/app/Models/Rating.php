@@ -7,22 +7,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Rating extends Model
 {
-    protected $table = 'ratings';
+	protected $table = 'ratings';
 
-    protected $fillable = [
-        'user_id',
-        'product_id',
-        'rate',
-        'date',
-    ];
+	protected $fillable = [
+		'user_id',
+		'product_id',
+		'rate',
+		'date',
+	];
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
+	public function user() : BelongsTo
+	{
+		return $this->belongsTo(User::class);
+	}
 
-    public function product(): BelongsTo
-    {
-        return $this->belongsTo(Product::class);
-    }
+	public function product() : BelongsTo
+	{
+		return $this->belongsTo(Product::class);
+	}
 }
