@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\BaseRepository;
+use App\Repositories\GenreRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +14,7 @@ abstract class BaseService
 	 */
 	protected BaseRepository $repository;
 
-	public function __construct($repository)
+	public function __construct(GenreRepository $repository)
 	{
 		$this->repository = $repository;
 	}
@@ -56,9 +57,9 @@ abstract class BaseService
 	 * @param array $data
 	 * @return Model
 	 */
-	public function updateRecord(int $id, array $data) : Model
+	public function updateRecord(int $id, array $data) : bool
 	{
-		$record = $this->repository->findOrFail($id);
+		$record = $this->repository->find($id);
 
 		return $record->update($data);
 	}
@@ -72,7 +73,7 @@ abstract class BaseService
 	 */
 	public function deleteRecord(int $id) : ?bool
 	{
-		$record = $this->repository->findOrFail($id);
+		$record = $this->repository->find($id);
 
 		return $record->delete();
 	}
