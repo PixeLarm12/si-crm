@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -24,21 +24,17 @@ class UserFactory extends Factory
 	public function definition() : array
 	{
 		return [
-			'name'              => fake()->name(),
-			'email'             => fake()->unique()->safeEmail(),
-			'email_verified_at' => now(),
-			'password'          => static::$password ??= Hash::make('password'),
-			'remember_token'    => Str::random(10),
+			'name'                 => $this->faker->name,
+			'email'                => $this->faker->unique()->safeEmail,
+			'password'             => Hash::make('password'),
+			'cpf'                  => $this->faker->numberBetween(11111111111, 99999999999),
+			'birth_date'           => $this->faker->date('Y-m-d', '-18 years'),  // Data de nascimento (maior de idade)
+			'address'              => $this->faker->streetAddress,
+			'address_number'       => $this->faker->numberBetween(1, 200),
+			'address_neighborhood' => $this->faker->word,
+			'address_complement'   => $this->faker->optional()->secondaryAddress,
+			'address_zipcode'      => $this->faker->numberBetween(11111111, 99999999),
+			'role'                 => $this->faker->randomElement([UserEnum::CLIENT, UserEnum::EMPLOYEE]),
 		];
-	}
-
-	/**
-	 * Indicate that the model's email address should be unverified.
-	 */
-	public function unverified() : static
-	{
-		return $this->state(fn (array $attributes) => [
-			'email_verified_at' => null,
-		]);
 	}
 }
