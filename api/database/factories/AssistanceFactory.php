@@ -18,7 +18,7 @@ class AssistanceFactory extends Factory
     public function definition(): array
     {
         return [
-            'opened_by' => $this->faker->numberBetween(1, 50),  // ID do usuário que abriu
+            'opened_by' => $this->faker->numberBetween(1, 10),  // ID do usuário que abriu
             'admin_id' => $this->faker->numberBetween(1, 10),   // ID do administrador
             'type' => $this->faker->randomElement([AssistanceEnum::TYPE_COMPLAINT, AssistanceEnum::TYPE_SUGGEST, AssistanceEnum::TYPE_PROBLEM]), // Tipos de assistência
             'subject' => $this->faker->word,

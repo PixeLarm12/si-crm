@@ -18,7 +18,7 @@ class NotificationFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, 11),
+            'user_id' => $this->faker->numberBetween(1, 10),
             'title' => $this->faker->word,
             'message' => $this->faker->text(255),
             'type' => $this->faker->randomElement([NotificationEnum::TYPE_PURCHASE, NotificationEnum::TYPE_OFFER, NotificationEnum::TYPE_PROBLEM]),
