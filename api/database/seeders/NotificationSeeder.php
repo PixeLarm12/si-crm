@@ -7,11 +7,11 @@ use Illuminate\Database\Seeder;
 
 class NotificationSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
-        Notification::factory()->count(20)->create();
-    }
+	/**
+	 * Run the database seeds.
+	 */
+	public function run() : void
+	{
+		Notification::factory()->count(20)->create();
+	}
 }

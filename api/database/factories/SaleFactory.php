@@ -9,17 +9,17 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class SaleFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
-        return [
-            'user_id' => $this->faker->numberBetween(1, 10),
-            'total_price' => $this->faker->randomFloat(2, 20, 500),  // Total entre 20 e 500
-            'date' => $this->faker->dateTimeBetween('-1 year', 'now'),
-        ];
-    }
+	/**
+	 * Define the model's default state.
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function definition() : array
+	{
+		return [
+			'user_id'     => $this->faker->numberBetween(1, 10),
+			'total_price' => $this->faker->randomFloat(2, 20, 500),  // Total entre 20 e 500
+			'date'        => $this->faker->dateTimeBetween('-1 year', 'now'),
+		];
+	}
 }

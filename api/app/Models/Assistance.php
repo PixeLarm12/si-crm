@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Assistance extends Model
 {
 	use HasFactory;
-	
+
 	protected $table = 'assistances';
 
 	protected $fillable = [

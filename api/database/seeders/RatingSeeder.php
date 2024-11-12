@@ -7,11 +7,11 @@ use Illuminate\Database\Seeder;
 
 class RatingSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
-        Rating::factory()->count(20)->create();
-    }
+	/**
+	 * Run the database seeds.
+	 */
+	public function run() : void
+	{
+		Rating::factory()->count(20)->create();
+	}
 }

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Genre extends Model
 {
 	use HasFactory;
-	
+
 	protected $table = 'genres';
 
 	protected $fillable = [
