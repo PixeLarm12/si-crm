@@ -18,12 +18,12 @@ class DatabaseSeeder extends Seeder
 			PhoneSeeder::class,
 			GenreSeeder::class,
 			ProductSeeder::class,
-			AssistanceSeeder::class,
 			NotificationSeeder::class,
 			ProductGenreSeeder::class,
 			RatingSeeder::class,
 			SaleSeeder::class,
 			SaleItemSeeder::class,
+			AssistanceSeeder::class,
 		]);
 	}
 }

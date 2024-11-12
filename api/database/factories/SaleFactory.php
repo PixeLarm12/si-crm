@@ -17,7 +17,7 @@ class SaleFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, 50),
+            'user_id' => $this->faker->numberBetween(1, 11),
             'total_price' => $this->faker->randomFloat(2, 20, 500),  // Total entre 20 e 500
             'date' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];

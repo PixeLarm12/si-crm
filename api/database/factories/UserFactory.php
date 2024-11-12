@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -30,11 +31,11 @@ class UserFactory extends Factory
             'cpf' => $this->faker->numberBetween(11111111111, 99999999999),
             'birth_date' => $this->faker->date('Y-m-d', '-18 years'),  // Data de nascimento (maior de idade)
             'address' => $this->faker->streetAddress,
-            'address_number' => $this->faker->buildingNumber,
-            'address_neighborhood' => $this->faker->citySuffix,
+            'address_number' => $this->faker->numberBetween(1, 200),
+            'address_neighborhood' => $this->faker->word,
             'address_complement' => $this->faker->optional()->secondaryAddress,
-            'address_zipcode' => $this->faker->postcode,
-            'role' => $this->faker->randomElement(['user', 'admin']),
+            'address_zipcode' => $this->faker->numberBetween(11111111, 99999999),
+            'role' => $this->faker->randomElement([UserEnum::CLIENT, UserEnum::EMPLOYEE]),
         ];
 	}
 }

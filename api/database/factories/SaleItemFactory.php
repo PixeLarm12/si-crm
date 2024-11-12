@@ -17,6 +17,7 @@ class SaleItemFactory extends Factory
     public function definition(): array
     {
         return [
+            'sale_id' => $this->faker->numberBetween(1, 10),
             'product_id' => $this->faker->numberBetween(1, 10),
             'amount' => $this->faker->numberBetween(1, 10),
             'unit_price' => $this->faker->randomFloat(2, 5, 100),

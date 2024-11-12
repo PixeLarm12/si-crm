@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ProductEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class ProductFactory extends Factory
             'title' => $this->faker->word,
             'price' => $this->faker->randomFloat(2, 5, 100),  // Preço entre 5 e 100
             'amount' => $this->faker->numberBetween(1, 100),
-            'status' => $this->faker->randomElement(['available', 'out_of_stock']),
+            'status' => $this->faker->randomElement([ProductEnum::STATUS_DRAFT, ProductEnum::STATUS_PUBLISHED]),
         ];
     }
 }
