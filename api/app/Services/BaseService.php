@@ -14,7 +14,7 @@ abstract class BaseService
 	 */
 	protected BaseRepository $repository;
 
-	public function __construct(GenreRepository $repository)
+	public function __construct($repository)
 	{
 		$this->repository = $repository;
 	}
