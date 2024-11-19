@@ -4,6 +4,8 @@ namespace App\Enums;
 
 class NotificationEnum extends AbstractEnum
 {
+	public const ROUTE_PREFIX = 'notifications';
+
 	// Status
 	public const STATUS_UNREAD = 0;
 

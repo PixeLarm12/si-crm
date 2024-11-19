@@ -4,6 +4,7 @@ namespace App\Enums;
 
 class AssistanceEnum extends AbstractEnum
 {
+	public const ROUTE_PREFIX = 'assistances';
 	// Status
 	public const STATUS_OPENED = 0;
 
