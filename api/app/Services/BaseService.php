@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Repositories\BaseRepository;
-use App\Repositories\GenreRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 

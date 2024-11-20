@@ -17,11 +17,10 @@ class UserRequest extends FormRequest
 			'address'              => 'required|min:3|max:120',
 			'address_number'       => 'required|min:1|max:15',
 			'address_neighborhood' => 'required|min:3|max:120',
-			'address_complement'   => 'sometimes|required|min:3|max:120',
+			'address_complement' => 'sometimes|nullable|min:3|max:120',
 			'address_zipcode'      => 'required|min:8|max:8',
 			'role'                 => 'required|integer|min:1',
 			'phones'               => 'required|array|min:1',
-			'phones.*.user_id'     => 'required|integer',
 			'phones.*.phone'       => 'required|min:10|max:15',
 		];
 	}
@@ -63,8 +62,6 @@ class UserRequest extends FormRequest
 			'phones.required'               => 'Phone is required',
 			'phones.array'                  => 'Phone must be array',
 			'phones.min'                    => 'Phone must have at least 1 added',
-			'phones.*.user_id.required'     => 'Phone user ID is required',
-			'phones.*.user_id.integer'      => 'Phone user ID must be integer',
 			'phones.*.phone.required'       => 'Phone number is required',
 			'phones.*.phone.min'            => 'Phone number must have at least 10 numbers',
 			'phones.*.phone.max'            => 'Phone number cannot be longer than 15 numbers',
