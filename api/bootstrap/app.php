@@ -18,10 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (Throwable $e) {
-            StringUtil::getValidationErrorsMessages($e);
             if($e instanceof ValidationException) {
                 return response()->json(
-                        ['message' => $e->getMessage()],
+                        ['message' => StringUtil::getValidationErrorsMessages($e->errors())],
                         $e->status);
             }
         });
