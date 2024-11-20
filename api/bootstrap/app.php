@@ -1,9 +1,11 @@
 <?php
 
 use App\Enums\AbstractEnum;
+use App\Util\StringUtil;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Validation\ValidationException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,6 +18,11 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (Throwable $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getStatusCode(), $e->getHeaders());
+            StringUtil::getValidationErrorsMessages($e);
+            if($e instanceof ValidationException) {
+                return response()->json(
+                        ['message' => $e->getMessage()],
+                        $e->status);
+            }
         });
     })->create();
