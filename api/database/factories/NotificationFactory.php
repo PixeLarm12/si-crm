@@ -19,7 +19,7 @@ class NotificationFactory extends Factory
 	{
 		return [
 			'user_id'    => $this->faker->numberBetween(1, 10),
-			'title'      => $this->faker->word,
+			'title'      => $this->faker->sentence(2),
 			'message'    => $this->faker->text(255),
 			'type'       => $this->faker->randomElement([NotificationEnum::TYPE_PURCHASE, NotificationEnum::TYPE_OFFER, NotificationEnum::TYPE_PROBLEM]),
 			'date'       => $this->faker->dateTimeBetween('-1 year', 'now'),
