@@ -96,4 +96,15 @@ class UserRoutesTest extends TestCase
 
 		$this->assertDatabaseHas('users', $data);
 	}
+
+	public function test_if_delete_route_removes_resource_successfully(): void
+	{
+		$user = User::factory()->create();
+
+		$response = $this->delete("{$this->baseUri}/{$user->id}");
+
+		$response->assertStatus(Response::HTTP_NO_CONTENT);
+		$this->assertSoftDeleted('users', ['id' => $user->id]);
+	}
+
 }

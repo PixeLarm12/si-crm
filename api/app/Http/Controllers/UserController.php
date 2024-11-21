@@ -35,6 +35,6 @@ class UserController extends BaseController
 
 	public function destroy(string $id)
 	{
-		return $this->defaultResponse($this->service->deleteRecord($id));
+		return $this->defaultResponse($this->service->deleteRecord($id), Response::HTTP_NO_CONTENT);
 	}
 }
