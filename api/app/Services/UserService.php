@@ -26,4 +26,26 @@ class UserService extends BaseService
 
 		return $user;
 	}
+
+	/**
+	 * Update record with Repository by ID.
+	 *
+	 * @param int $id
+	 * @param array $data
+	 * @return Model
+	 */
+	public function updateRecord(int $id, array $data) : bool
+	{
+		$user = $this->repository->find($id);
+
+		$user->update($data);
+		
+		if($data['phones']) {
+			$user->phones()->delete();
+			
+			$user->phones()->createMany($data['phones']);
+		}
+
+		return (bool) $user;
+	}
 }

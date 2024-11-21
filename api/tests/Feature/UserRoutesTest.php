@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\Enums\AbstractEnum;
 use App\Enums\UserEnum;
+use App\Models\User;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class UserRoutesTest extends TestCase
@@ -24,13 +26,13 @@ class UserRoutesTest extends TestCase
 		$data = [
 			'name'                 => $faker->name,
 			'email'                => $faker->unique()->safeEmail,
-			'password'             => 'strongpass1234@!',
-			'password_confirmation'=> 'strongpass1234@!',
+			'password'             => 'strongPassword12#$',
+			'password_confirmation'=> 'strongPassword12#$',
 			'cpf'                  => $faker->numberBetween(11111111111, 99999999999),
 			'birth_date'           => $faker->date('Y-m-d', '-18 years'),  // Data de nascimento (maior de idade)
 			'address'              => $faker->streetAddress,
 			'address_number'       => $faker->numberBetween(1, 200),
-			'address_neighborhood' => $faker->word,
+			'address_neighborhood' => ucfirst($faker->word()) . ' ' . $faker->citySuffix(),
 			'address_complement'   => $faker->optional()->secondaryAddress,
 			'address_zipcode'      => $faker->numberBetween(11111111, 99999999),
 			'role'                 => $faker->randomElement([UserEnum::CLIENT, UserEnum::EMPLOYEE]),
@@ -42,13 +44,56 @@ class UserRoutesTest extends TestCase
 		$response = $this->post($this->baseUri, $data);
 
 		$user = json_decode($response->content(), true);
-		$response->assertStatus(201);
+		$response->assertStatus(Response::HTTP_CREATED);
 
-		$phones = $data["phones"];
-		
-		$this->assertDatabaseHas('users', $user);
-		$this->assertDatabaseHas('phones', [
-			"phone" => $phones[0]['phone']
+		$this->assertDatabaseHas('users', [
+			'name'                 => $user['name'],			
+			'email'                => $user['email'],
+			'cpf'                  => $user['cpf'],
+			'birth_date'           => $user['birth_date'],
+			'address'              => $user['address'],
+			'address_number'       => $user['address_number'],
+			'address_neighborhood' => $user['address_neighborhood'],
+			'address_complement'   => $user['address_complement'],
+			'address_zipcode'      => $user['address_zipcode'],
+			'role'                 => $user['role'],
 		]);
+	}
+
+	public function test_if_update_route_modifies_resource_successfully(): void
+	{
+		$faker = \Faker\Factory::create();
+
+		$user = User::factory()->create();
+
+		$data = [
+			'id' => $user->id,
+			'name' => $faker->name,
+			'email' => $user->email,
+			'cpf' => $user->cpf,
+			'birth_date' => $user->birth_date,
+			'address' => $user->address,
+			'address_number' => $user->address_number,
+			'address_neighborhood' => $user->address_neighborhood,
+			'address_complement' => $user->address_complement,
+			'address_zipcode' => $user->address_zipcode,
+			'role' => $user->role,
+			'phones' =>[ 
+				[
+					'phone' => $user->phones()->first()->phone
+				],
+				[
+					'phone' => $faker->numberBetween(111111111111111, 999999999999999)
+				],
+			]
+		];
+
+		$response = $this->put("{$this->baseUri}/{$user->id}", $data);
+
+		$response->assertStatus(Response::HTTP_CREATED);
+		
+		unset($data['phones']);
+
+		$this->assertDatabaseHas('users', $data);
 	}
 }
