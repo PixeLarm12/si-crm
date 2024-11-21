@@ -8,7 +8,7 @@ use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class UserRoutesTest extends TestCase
+class UserCRUDTest extends TestCase
 {
 	private $baseUri = '/' . AbstractEnum::API_ROUTE_PREFIX . '/' . UserEnum::ROUTE_PREFIX;
 
@@ -16,7 +16,7 @@ class UserRoutesTest extends TestCase
 	{
 		$response = $this->get($this->baseUri);
 
-		$response->assertStatus(200);
+		$response->assertStatus(status: Response::HTTP_OK);
 	}
 
 	public function test_if_store_route_creates_resource_successfully(): void
@@ -67,7 +67,6 @@ class UserRoutesTest extends TestCase
 		$user = User::factory()->create();
 
 		$data = [
-			'id' => $user->id,
 			'name' => $faker->name,
 			'email' => $user->email,
 			'cpf' => $user->cpf,

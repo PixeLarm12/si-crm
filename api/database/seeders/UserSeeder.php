@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
 	 */
 	public function run() : void
 	{
-		$admin = User::firstOrNew([
+		$admin = User::create([
 			'name'                 => 'User Admin',
 			'email'                => 'user_email@email.com',
 			'password'             => Hash::make('123456'),
@@ -28,6 +28,6 @@ class UserSeeder extends Seeder
 			'role'                 => UserEnum::ADMIN,
 		]);
 
-		User::factory()->count(10)->create();
+		// User::factory()->count(10)->create();
 	}
 }

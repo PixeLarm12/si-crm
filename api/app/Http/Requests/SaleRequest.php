@@ -44,7 +44,7 @@ class SaleRequest extends FormRequest
 		return [
 			'user_id'     => $this->input('user_id'),
 			'total_price' => $this->input('total_price'),
-			'date'        => Carbon::now(),
+			'date'        => $this->input('date') ?? Carbon::now(),
 			'items'       => $this->input('items'),
 		];
 	}

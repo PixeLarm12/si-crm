@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\UserEnum;
+use App\Models\Phone;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
@@ -41,9 +42,7 @@ class UserFactory extends Factory
 	public function configure(): self
 	{
 		return $this->afterCreating(function ($user) {
-			$user->phones()->create([
-				'phone' => $this->faker->numberBetween(111111111111111, 999999999999999),
-			]);
+			$user->phones()->create(Phone::factory()->create());
 		});
 	}
 }
