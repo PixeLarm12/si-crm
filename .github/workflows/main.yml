@@ -88,8 +88,8 @@
 
     unit-tests:
       runs-on: ubuntu-latest
-      needs:
-        - environment
+      # needs:
+      #   - environment
 
       steps:
       - name: Checkout code
