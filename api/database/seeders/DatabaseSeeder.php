@@ -20,8 +20,7 @@ class DatabaseSeeder extends Seeder
 			ProductGenreSeeder::class,
 			RatingSeeder::class,
 			SaleSeeder::class,
-			SaleItemSeeder::class,
-			// AssistanceSeeder::class,
+			AssistanceSeeder::class,
 		]);
 	}
 }

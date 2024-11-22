@@ -18,14 +18,15 @@ class SaleItemFactory extends Factory
 	 */
 	public function definition() : array
 	{
+		$amount = $this->faker->numberBetween(1, 10);
+		$unitPrice = $this->faker->randomFloat(2, 5, 100);
+
 		return [
 			'sale_id'     => Sale::query()->inRandomOrder()->value('id'),
 			'product_id'  => Product::query()->inRandomOrder()->value('id'),
-			'amount'      => $this->faker->numberBetween(1, 10),
-			'unit_price'  => $this->faker->randomFloat(2, 5, 100),
-			'total_price' => function (array $attributes) {
-				return $attributes['amount'] * $attributes['unit_price'];
-			},
+			'amount'      => $amount,
+			'unit_price'  => $unitPrice,
+			'total_price' => (double) ($amount * $unitPrice)
 		];
 	}
 }

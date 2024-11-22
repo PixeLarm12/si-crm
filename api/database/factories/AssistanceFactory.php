@@ -20,7 +20,7 @@ class AssistanceFactory extends Factory
 	public function definition() : array
 	{
 		return [
-			'opened_by'  => User::query()->where('role', UserEnum::CLIENT)->inRandomOrder()->value('id'),,
+			'opened_by'  => User::query()->where('role', UserEnum::CLIENT)->inRandomOrder()->value('id'),
 			'admin_id'   => User::query()->where('role', UserEnum::ADMIN)->inRandomOrder()->value('id'),
 			'type'       => $this->faker->randomElement([AssistanceEnum::TYPE_COMPLAINT, AssistanceEnum::TYPE_SUGGEST, AssistanceEnum::TYPE_PROBLEM]),
 			'subject'    => $this->faker->sentence(2),

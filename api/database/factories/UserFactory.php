@@ -42,7 +42,7 @@ class UserFactory extends Factory
 	public function configure(): self
 	{
 		return $this->afterCreating(function ($user) {
-			$user->phones()->create(Phone::factory()->create());
+			$user->phones()->createMany(Phone::factory()->count(2)->make()->toArray());
 		});
 	}
 }
