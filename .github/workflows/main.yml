@@ -112,6 +112,11 @@
           cd api
           composer install --prefer-dist --no-progress --no-suggest
 
+      - name: Run Datase migrations
+        run: |
+          cd api
+          php artisan migrate --seed
+
       - name: Run Unit Tests
         run: |
           cd api
