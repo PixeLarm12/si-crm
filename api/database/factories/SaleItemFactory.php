@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
+use App\Models\Sale;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +19,8 @@ class SaleItemFactory extends Factory
 	public function definition() : array
 	{
 		return [
-			'sale_id'     => $this->faker->numberBetween(1, 10),
-			'product_id'  => $this->faker->numberBetween(1, 10),
+			'sale_id'     => Sale::query()->inRandomOrder()->value('id'),
+			'product_id'  => Product::query()->inRandomOrder()->value('id'),
 			'amount'      => $this->faker->numberBetween(1, 10),
 			'unit_price'  => $this->faker->randomFloat(2, 5, 100),
 			'total_price' => function (array $attributes) {

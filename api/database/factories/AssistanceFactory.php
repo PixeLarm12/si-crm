@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Enums\AssistanceEnum;
+use App\Enums\UserEnum;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,8 +20,8 @@ class AssistanceFactory extends Factory
 	public function definition() : array
 	{
 		return [
-			'opened_by'  => $this->faker->numberBetween(1, 10),
-			'admin_id'   => $this->faker->numberBetween(1, 10),
+			'opened_by'  => User::query()->where('role', UserEnum::CLIENT)->inRandomOrder()->value('id'),,
+			'admin_id'   => User::query()->where('role', UserEnum::ADMIN)->inRandomOrder()->value('id'),
 			'type'       => $this->faker->randomElement([AssistanceEnum::TYPE_COMPLAINT, AssistanceEnum::TYPE_SUGGEST, AssistanceEnum::TYPE_PROBLEM]),
 			'subject'    => $this->faker->sentence(2),
 			'message'    => $this->faker->text(255),

@@ -16,11 +16,11 @@ class DatabaseSeeder extends Seeder
 			UserSeeder::class,
 			GenreSeeder::class,
 			ProductSeeder::class,
-			// NotificationSeeder::class,
+			NotificationSeeder::class,
 			ProductGenreSeeder::class,
-			// RatingSeeder::class,
-			// SaleSeeder::class,
-			// SaleItemSeeder::class,
+			RatingSeeder::class,
+			SaleSeeder::class,
+			SaleItemSeeder::class,
 			// AssistanceSeeder::class,
 		]);
 	}
