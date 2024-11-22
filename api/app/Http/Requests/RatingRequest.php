@@ -12,7 +12,7 @@ class RatingRequest extends FormRequest
 		return [
 			'user_id'    => 'required|integer',
 			'product_id' => 'required|integer',
-			'rate'       => 'required|decimal:2,1',
+			'rate'       => 'required|decimal:1',
 		];
 	}
 

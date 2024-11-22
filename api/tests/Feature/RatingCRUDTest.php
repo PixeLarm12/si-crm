@@ -29,7 +29,7 @@ class RatingCRUDTest extends TestCase
 		$data = [
 			"user_id" => User::where('role', UserEnum::CLIENT)->first()->id,
 			"product_id" => Product::first()->id,
-			"rate" => $faker->numberBetween(1, 5)
+			"rate" => $faker->randomFloat(1, 1, 5),
 		];
 
 		$response = $this->post($this->baseUri, $data);
@@ -46,9 +46,9 @@ class RatingCRUDTest extends TestCase
 		$rating = Rating::factory()->create();
 
 		$data = [
-			"user_id" => $rating->user()->id,
-			"product_id" => $rating->product()->id,
-			"rate" => $faker->numberBetween(1, 5)
+			"user_id" => $rating->user->id,
+			"product_id" => $rating->product->id,
+			"rate" => $faker->randomFloat(1, 1, 5)
 		];
 
 		$response = $this->put("{$this->baseUri}/{$rating->id}", $data);

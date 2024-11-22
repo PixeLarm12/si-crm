@@ -20,7 +20,7 @@ class RatingFactory extends Factory
 		return [
 			'user_id'    => User::query()->inRandomOrder()->value('id'),
 			'product_id' => $this->faker->numberBetween(1, 10),
-			'rate'       => $this->faker->numberBetween(1, 5),  // Avaliação entre 1 e 5 estrelas
+			'rate'       => $this->faker->randomFloat(1, 1, 5),  // Avaliação entre 1 e 5 estrelas
 			'date'       => $this->faker->dateTimeBetween('-1 year', 'now'),
 		];
 	}
