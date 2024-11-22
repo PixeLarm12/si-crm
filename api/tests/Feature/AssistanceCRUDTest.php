@@ -40,7 +40,7 @@ class AssistanceCRUDTest extends TestCase
 
 		$response->assertStatus(Response::HTTP_CREATED);
 
-		$this->assertDatabaseHas('users', $data);
+		$this->assertDatabaseHas('assistances', $data);
 	}
 
 	public function test_if_update_route_modifies_resource_successfully(): void
@@ -50,8 +50,8 @@ class AssistanceCRUDTest extends TestCase
 		$assistance = Assistance::factory()->create();
 
 		$data = [
-			"opened_by" => $assistance->openedByUser()->id,
-			"admin_id" => $assistance->admin()->id,
+			"opened_by" => $assistance->openedByUser->id,
+			"admin_id" => $assistance->admin->id,
 			"type" => $faker->randomElement([AssistanceEnum::TYPE_COMPLAINT, AssistanceEnum::TYPE_SUGGEST, AssistanceEnum::TYPE_PROBLEM]),
 			"subject" => $faker->sentence(2),
 			"message" => $faker->text(255),
