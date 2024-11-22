@@ -19,7 +19,7 @@ class SaleItemFactory extends Factory
 	public function definition() : array
 	{
 		$amount = $this->faker->numberBetween(1, 10);
-		$unitPrice = $this->faker->randomFloat(2, 5, 100);
+		$unitPrice = $this->faker->randomFloat(2, 0.5, 3000);
 
 		return [
 			'sale_id'     => Sale::query()->inRandomOrder()->value('id'),

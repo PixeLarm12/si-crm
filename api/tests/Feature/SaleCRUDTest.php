@@ -7,6 +7,7 @@ use App\Enums\SaleEnum;
 use App\Enums\UserEnum;
 use App\Models\Product;
 use App\Models\Sale;
+use App\Models\SaleItem;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -28,25 +29,8 @@ class SaleCRUDTest extends TestCase
 
 		$data = [
 			"user_id" => User::where('role', UserEnum::CLIENT)->first()->id,
-			"total_price" => $faker->randomFloat(2, 20, 500),
-			"items" => [
-				[
-					"product_id" => Product::first()->id,
-					"amount" => $faker->numberBetween(1, 10),
-					"unit_price" => $faker->randomFloat(2, 5, 100),
-					"total_price" =>  function (array $attributes) {
-						return $attributes['amount'] * $attributes['unit_price'];
-					}
-				],
-				[
-					"product_id" => Product::latest()->first()->id,
-					"amount" => $faker->numberBetween(1, 10),
-					"unit_price" => $faker->randomFloat(2, 5, 100),
-					"total_price" =>  function (array $attributes) {
-						return $attributes['amount'] * $attributes['unit_price'];
-					}
-				]
-			]
+			"total_price" => $faker->randomFloat(2, 0.5, 3000),
+			"items" => SaleItem::factory()->count(2)->make()->toArray()
 		];
 
 		$response = $this->post($this->baseUri, $data);
@@ -62,29 +46,12 @@ class SaleCRUDTest extends TestCase
 	{
 		$faker = \Faker\Factory::create();
 
-		$sale = User::factory()->create();
+		$sale = Sale::factory()->create();
 
 		$data = [
 			"user_id" => User::where('role', UserEnum::CLIENT)->first()->id,
-			"total_price" => $faker->randomFloat(2, 20, 500),
-			"items" => [
-				[
-					"product_id" => Product::first()->id,
-					"amount" => $faker->numberBetween(1, 10),
-					"unit_price" => $faker->randomFloat(2, 5, 100),
-					"total_price" =>  function (array $attributes) {
-						return $attributes['amount'] * $attributes['unit_price'];
-					}
-				],
-				[
-					"product_id" => Product::latest()->first()->id,
-					"amount" => $faker->numberBetween(1, 10),
-					"unit_price" => $faker->randomFloat(2, 5, 100),
-					"total_price" =>  function (array $attributes) {
-						return $attributes['amount'] * $attributes['unit_price'];
-					}
-				]
-			]
+			"total_price" => $faker->randomFloat(2, 0.5, 3000),
+			"items" => SaleItem::factory()->count(2)->make()->toArray()
 		];
 
 		$response = $this->put("{$this->baseUri}/{$sale->id}", $data);

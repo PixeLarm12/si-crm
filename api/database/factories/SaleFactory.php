@@ -21,7 +21,7 @@ class SaleFactory extends Factory
 	{
 		return [
 			'user_id'     => User::query()->inRandomOrder()->value('id'),
-			'total_price' => $this->faker->randomFloat(2, 20, 500), 
+			'total_price' => $this->faker->randomFloat(2, 0.5, 3000), 
 			'date'        => $this->faker->dateTimeBetween('-1 year', 'now'),
 		];
 	}

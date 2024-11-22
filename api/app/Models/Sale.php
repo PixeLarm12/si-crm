@@ -18,6 +18,15 @@ class Sale extends Model
 		'date',
 	];
 
+	protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($sale) {
+            $sale->items()->delete();
+        });
+    }
+
 	public function items() : HasMany
 	{
 		return $this->hasMany(SaleItem::class);
