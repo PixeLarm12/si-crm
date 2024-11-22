@@ -25,7 +25,7 @@ class ProductCRUDTest extends TestCase
 
 		$data = [
 			"title" => $faker->sentence(2),
-			"price" => $faker->randomFloat(2, 5, 100),
+			"price" => $faker->randomFloat(2, 0.5, 3000),
 			"amount" => $faker->numberBetween(1, 100),
 			"status" => $faker->randomElement([ProductEnum::STATUS_DRAFT, ProductEnum::STATUS_PUBLISHED])
 		];
@@ -45,7 +45,7 @@ class ProductCRUDTest extends TestCase
 
 		$data = [
 			"title" => $faker->sentence(2),
-			"price" => $faker->randomFloat(2, 5, 100),
+			"price" => $faker->randomFloat(2, 0.5, 3000),
 			"amount" => $faker->numberBetween(1, 100),
 			"status" => $faker->randomElement([ProductEnum::STATUS_DRAFT, ProductEnum::STATUS_PUBLISHED])
 		];
