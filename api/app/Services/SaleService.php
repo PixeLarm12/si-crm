@@ -22,7 +22,7 @@ class SaleService extends BaseService
 	{
 		$sale = $this->repository->create($data);
 
-		$sale->items()->createMany($data["items"]);
+		$sale->items()->createMany($data['items']);
 
 		return $sale;
 	}
@@ -39,10 +39,10 @@ class SaleService extends BaseService
 		$sale = $this->repository->find($id);
 
 		$sale->update($data);
-		
-		if($data['items']) {
+
+		if ($data['items']) {
 			$sale->items()->delete();
-			
+
 			$sale->items()->createMany($data['items']);
 		}
 

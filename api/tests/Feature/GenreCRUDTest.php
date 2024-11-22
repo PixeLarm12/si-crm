@@ -19,7 +19,7 @@ class GenreCRUDTest extends TestCase
 		$response->assertStatus(Response::HTTP_OK);
 	}
 
-	public function test_if_store_route_creates_resource_successfully(): void
+	public function test_if_store_route_creates_resource_successfully() : void
 	{
 		$faker = \Faker\Factory::create();
 
@@ -34,7 +34,7 @@ class GenreCRUDTest extends TestCase
 		$this->assertDatabaseHas('genres', $data);
 	}
 
-	public function test_if_update_route_modifies_resource_successfully(): void
+	public function test_if_update_route_modifies_resource_successfully() : void
 	{
 		$faker = \Faker\Factory::create();
 
@@ -49,7 +49,7 @@ class GenreCRUDTest extends TestCase
 		$response->assertStatus(Response::HTTP_CREATED);
 	}
 
-	public function test_if_delete_route_removes_resource_successfully(): void
+	public function test_if_delete_route_removes_resource_successfully() : void
 	{
 		$genre = Genre::factory()->create();
 
@@ -58,5 +58,4 @@ class GenreCRUDTest extends TestCase
 		$response->assertStatus(Response::HTTP_NO_CONTENT);
 		$this->assertDatabaseMissing('genres', ['id' => $genre->id]);
 	}
-
 }

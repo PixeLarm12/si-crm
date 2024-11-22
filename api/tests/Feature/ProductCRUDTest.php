@@ -19,15 +19,15 @@ class ProductCRUDTest extends TestCase
 		$response->assertStatus(Response::HTTP_OK);
 	}
 
-	public function test_if_store_route_creates_resource_successfully(): void
+	public function test_if_store_route_creates_resource_successfully() : void
 	{
 		$faker = \Faker\Factory::create();
 
 		$data = [
-			"title" => $faker->sentence(2),
-			"price" => $faker->randomFloat(2, 0.5, 3000),
-			"amount" => $faker->numberBetween(1, 100),
-			"status" => $faker->randomElement([ProductEnum::STATUS_DRAFT, ProductEnum::STATUS_PUBLISHED])
+			'title'  => $faker->sentence(2),
+			'price'  => $faker->randomFloat(2, 0.5, 3000),
+			'amount' => $faker->numberBetween(1, 100),
+			'status' => $faker->randomElement([ProductEnum::STATUS_DRAFT, ProductEnum::STATUS_PUBLISHED]),
 		];
 
 		$response = $this->post($this->baseUri, $data);
@@ -37,27 +37,27 @@ class ProductCRUDTest extends TestCase
 		$this->assertDatabaseHas('products', $data);
 	}
 
-	public function test_if_update_route_modifies_resource_successfully(): void
+	public function test_if_update_route_modifies_resource_successfully() : void
 	{
 		$faker = \Faker\Factory::create();
 
 		$product = Product::factory()->create();
 
 		$data = [
-			"title" => $faker->sentence(2),
-			"price" => $faker->randomFloat(2, 0.5, 3000),
-			"amount" => $faker->numberBetween(1, 100),
-			"status" => $faker->randomElement([ProductEnum::STATUS_DRAFT, ProductEnum::STATUS_PUBLISHED])
+			'title'  => $faker->sentence(2),
+			'price'  => $faker->randomFloat(2, 0.5, 3000),
+			'amount' => $faker->numberBetween(1, 100),
+			'status' => $faker->randomElement([ProductEnum::STATUS_DRAFT, ProductEnum::STATUS_PUBLISHED]),
 		];
 
 		$response = $this->put("{$this->baseUri}/{$product->id}", $data);
 
 		$response->assertStatus(Response::HTTP_CREATED);
-		
+
 		$this->assertDatabaseHas('products', $data);
 	}
 
-	public function test_if_delete_route_removes_resource_successfully(): void
+	public function test_if_delete_route_removes_resource_successfully() : void
 	{
 		$product = Product::factory()->create();
 
@@ -66,5 +66,4 @@ class ProductCRUDTest extends TestCase
 		$response->assertStatus(Response::HTTP_NO_CONTENT);
 		$this->assertSoftDeleted('products', ['id' => $product->id]);
 	}
-
 }

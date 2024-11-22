@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Product;
 use App\Models\SaleItem;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,12 +20,12 @@ class SaleFactory extends Factory
 	{
 		return [
 			'user_id'     => User::query()->inRandomOrder()->value('id'),
-			'total_price' => $this->faker->randomFloat(2, 0.5, 3000), 
+			'total_price' => $this->faker->randomFloat(2, 0.5, 3000),
 			'date'        => $this->faker->dateTimeBetween('-1 year', 'now'),
 		];
 	}
 
-	public function configure(): self
+	public function configure() : self
 	{
 		return $this->afterCreating(function ($sale) {
 			$sale->items()->createMany(SaleItem::factory()->count(2)->make()->toArray());

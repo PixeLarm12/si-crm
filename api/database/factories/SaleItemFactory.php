@@ -26,7 +26,7 @@ class SaleItemFactory extends Factory
 			'product_id'  => Product::query()->inRandomOrder()->value('id'),
 			'amount'      => $amount,
 			'unit_price'  => $unitPrice,
-			'total_price' => (double) ($amount * $unitPrice)
+			'total_price' => (float) ($amount * $unitPrice),
 		];
 	}
 }

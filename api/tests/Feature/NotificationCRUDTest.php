@@ -21,15 +21,15 @@ class NotificationCRUDTest extends TestCase
 		$response->assertStatus(Response::HTTP_OK);
 	}
 
-	public function test_if_store_route_creates_resource_successfully(): void
+	public function test_if_store_route_creates_resource_successfully() : void
 	{
 		$faker = \Faker\Factory::create();
 
 		$data = [
-			"user_id" => User::where('role', UserEnum::CLIENT)->first()->id,
-			"title" => $faker->sentence(2),
-			"message" => $faker->text(255),
-			"type" => $faker->randomElement([NotificationEnum::STATUS_UNREAD, NotificationEnum::STATUS_READ])
+			'user_id' => User::where('role', UserEnum::CLIENT)->first()->id,
+			'title'   => $faker->sentence(2),
+			'message' => $faker->text(255),
+			'type'    => $faker->randomElement([NotificationEnum::STATUS_UNREAD, NotificationEnum::STATUS_READ]),
 		];
 
 		$response = $this->post($this->baseUri, $data);
@@ -39,17 +39,17 @@ class NotificationCRUDTest extends TestCase
 		$this->assertDatabaseHas('notifications', $data);
 	}
 
-	public function test_if_update_route_modifies_resource_successfully(): void
+	public function test_if_update_route_modifies_resource_successfully() : void
 	{
 		$faker = \Faker\Factory::create();
 
 		$notification = Notification::factory()->create();
 
 		$data = [
-			"user_id" => $notification->user->id,
-			"title" => $faker->sentence(2),
-			"message" => $faker->text(255),
-			"type" => $faker->randomElement([NotificationEnum::STATUS_UNREAD, NotificationEnum::STATUS_READ])
+			'user_id' => $notification->user->id,
+			'title'   => $faker->sentence(2),
+			'message' => $faker->text(255),
+			'type'    => $faker->randomElement([NotificationEnum::STATUS_UNREAD, NotificationEnum::STATUS_READ]),
 		];
 
 		$response = $this->put("{$this->baseUri}/{$notification->id}", $data);
@@ -59,7 +59,7 @@ class NotificationCRUDTest extends TestCase
 		$this->assertDatabaseHas('notifications', $data);
 	}
 
-	public function test_if_delete_route_removes_resource_successfully(): void
+	public function test_if_delete_route_removes_resource_successfully() : void
 	{
 		$notification = Notification::factory()->create();
 
@@ -68,5 +68,4 @@ class NotificationCRUDTest extends TestCase
 		$response->assertStatus(Response::HTTP_NO_CONTENT);
 		$this->assertDatabaseMissing('notifications', ['id' => $notification->id]);
 	}
-
 }

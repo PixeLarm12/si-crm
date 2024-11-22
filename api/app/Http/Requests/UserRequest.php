@@ -18,14 +18,14 @@ class UserRequest extends FormRequest
 			'address'              => 'required|min:3|max:120',
 			'address_number'       => 'required|min:1|max:15',
 			'address_neighborhood' => 'required|min:3|max:120',
-			'address_complement' => 'sometimes|nullable|min:3|max:120',
+			'address_complement'   => 'sometimes|nullable|min:3|max:120',
 			'address_zipcode'      => 'required|min:8|max:8',
 			'role'                 => 'required|integer|min:1',
 			'phones'               => 'required|array|min:1',
 			'phones.*.phone'       => 'required|min:10|max:15',
 		];
 
-		if($this->method() == 'PUT') {
+		if ($this->method() == 'PUT') {
 			$rules['password'] = 'nullable';
 			$rules['email'] = Rule::unique('users')->ignore($this->id);
 			$rules['cpf'] = Rule::unique('users')->ignore($this->id);
@@ -93,7 +93,7 @@ class UserRequest extends FormRequest
 			'phones'               => $this->input('phones'),
 		];
 
-		if($this->method() == 'POST') {
+		if ($this->method() == 'POST') {
 			$data['password'] = $this->input('password') ?? null;
 		}
 

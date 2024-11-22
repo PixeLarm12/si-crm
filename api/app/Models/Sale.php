@@ -19,13 +19,13 @@ class Sale extends Model
 	];
 
 	protected static function boot()
-    {
-        parent::boot();
+	{
+		parent::boot();
 
-        static::deleting(function ($sale) {
-            $sale->items()->delete();
-        });
-    }
+		static::deleting(function ($sale) {
+			$sale->items()->delete();
+		});
+	}
 
 	public function items() : HasMany
 	{

@@ -39,7 +39,7 @@ class UserFactory extends Factory
 		];
 	}
 
-	public function configure(): self
+	public function configure() : self
 	{
 		return $this->afterCreating(function ($user) {
 			$user->phones()->createMany(Phone::factory()->count(2)->make()->toArray());

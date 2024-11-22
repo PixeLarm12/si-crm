@@ -22,7 +22,7 @@ class NotificationController extends BaseController
 	{
 		return $this->defaultResponse($this->service->saveRecord($request->getData()), Response::HTTP_CREATED);
 	}
-	
+
 	public function show(string $id)
 	{
 		return $this->defaultResponse($this->service->findRecord($id));

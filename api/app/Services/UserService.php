@@ -22,7 +22,7 @@ class UserService extends BaseService
 	{
 		$user = $this->repository->create($data);
 
-		$user->phones()->createMany($data["phones"]);
+		$user->phones()->createMany($data['phones']);
 
 		return $user;
 	}
@@ -39,10 +39,10 @@ class UserService extends BaseService
 		$user = $this->repository->find($id);
 
 		$user->update($data);
-		
-		if($data['phones']) {
+
+		if ($data['phones']) {
 			$user->phones()->delete();
-			
+
 			$user->phones()->createMany($data['phones']);
 		}
 

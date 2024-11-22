@@ -22,14 +22,14 @@ class RatingCRUDTest extends TestCase
 		$response->assertStatus(Response::HTTP_OK);
 	}
 
-	public function test_if_store_route_creates_resource_successfully(): void
+	public function test_if_store_route_creates_resource_successfully() : void
 	{
 		$faker = \Faker\Factory::create();
 
 		$data = [
-			"user_id" => User::where('role', UserEnum::CLIENT)->first()->id,
-			"product_id" => Product::first()->id,
-			"rate" => $faker->randomFloat(1, 1, 5),
+			'user_id'    => User::where('role', UserEnum::CLIENT)->first()->id,
+			'product_id' => Product::first()->id,
+			'rate'       => $faker->randomFloat(1, 1, 5),
 		];
 
 		$response = $this->post($this->baseUri, $data);
@@ -39,26 +39,26 @@ class RatingCRUDTest extends TestCase
 		$this->assertDatabaseHas('ratings', $data);
 	}
 
-	public function test_if_update_route_modifies_resource_successfully(): void
+	public function test_if_update_route_modifies_resource_successfully() : void
 	{
 		$faker = \Faker\Factory::create();
 
 		$rating = Rating::factory()->create();
 
 		$data = [
-			"user_id" => $rating->user->id,
-			"product_id" => $rating->product->id,
-			"rate" => $faker->randomFloat(1, 1, 5)
+			'user_id'    => $rating->user->id,
+			'product_id' => $rating->product->id,
+			'rate'       => $faker->randomFloat(1, 1, 5),
 		];
 
 		$response = $this->put("{$this->baseUri}/{$rating->id}", $data);
 
 		$response->assertStatus(Response::HTTP_CREATED);
-		
+
 		$this->assertDatabaseHas('ratings', $data);
 	}
 
-	public function test_if_delete_route_removes_resource_successfully(): void
+	public function test_if_delete_route_removes_resource_successfully() : void
 	{
 		$rating = Rating::factory()->create();
 
@@ -67,5 +67,4 @@ class RatingCRUDTest extends TestCase
 		$response->assertStatus(Response::HTTP_NO_CONTENT);
 		$this->assertDatabaseMissing('ratings', ['id' => $rating->id]);
 	}
-
 }
