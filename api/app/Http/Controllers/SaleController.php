@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ReportEnum;
 use App\Enums\SaleEnum;
 use App\Http\Requests\SaleRequest;
 use App\Services\ReportService;
@@ -12,14 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 class SaleController extends BaseController
 {
 	/**
-	 * @var ReportService $reportService
+	 * @var ReportService
 	 */
 	protected ReportService $reportService;
 
 	public function __construct(SaleService $service)
 	{
 		parent::__construct($service);
-		
+
 		$this->reportService = new ReportService();
 	}
 
@@ -55,7 +54,7 @@ class SaleController extends BaseController
 		$html = view(SaleEnum::REPORT_VIEW, compact('chart'))->render();
 
 		$pdf = $this->reportService->generatePDF($html);
-		
-		return $pdf->stream("report_sale_" . $period . ".pdf");
+
+		return $pdf->stream('report_sale_' . $period . '.pdf');
 	}
 }

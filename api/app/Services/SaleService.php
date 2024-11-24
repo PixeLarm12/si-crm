@@ -2,11 +2,8 @@
 
 namespace App\Services;
 
-use App\Enums\ChartEnum;
-use App\Enums\SaleEnum;
 use App\Repositories\SaleRepository;
 use Illuminate\Database\Eloquent\Model;
-use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class SaleService extends BaseService
 {
