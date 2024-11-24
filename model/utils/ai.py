@@ -5,110 +5,110 @@ from . import rbm
 
 def recommend_to_user(recData):
     # Use .csv data do consume and recommend
-    filmes = pd.read_csv('./utils/imdb-movies-dataset.csv')
-    filmes['nota_normalizada'] = filmes['Rating'] / 10
+    movies = pd.read_csv('./utils/imdb-movies-dataset.csv')
+    movies['normalized_rating'] = movies['Rating'] / 10
 
-    catalogo_amostra = filmes.sample(n=5000, random_state=54)[['Title', 'Genre', 'nota_normalizada']]
+    catalog_sample = movies.sample(n=5000, random_state=54)[['Title', 'Genre', 'normalized_rating']]
 
     # Clear empty values
-    catalogo_amostra.dropna(subset=['Genre', 'nota_normalizada'], inplace=True)
+    catalog_sample.dropna(subset=['Genre', 'normalized_rating'], inplace=True)
 
     # Divide genres in lists, excluding NaN
-    catalogo_amostra['Genre'] = catalogo_amostra['Genre'].apply(lambda x: x.split(', ') if isinstance(x, str) else [])
+    catalog_sample['Genre'] = catalog_sample['Genre'].apply(lambda x: x.split(', ') if isinstance(x, str) else [])
 
     mlb = MultiLabelBinarizer()
-    generos_binarios = mlb.fit_transform(catalogo_amostra['Genre'])
+    genres_binary = mlb.fit_transform(catalog_sample['Genre'])
 
-    generos = mlb.classes_
-    # colunas_dados_rbm = list(generos) + ['nota_normalizada']
+    genres = mlb.classes_
 
-    dados_rbm = pd.DataFrame(generos_binarios, columns=generos)
-    dados_rbm = pd.concat([dados_rbm, catalogo_amostra[['nota_normalizada']].reset_index(drop=True)], axis=1)
+    rbm_data = pd.DataFrame(genres_binary, columns=genres)
+    rbm_data = pd.concat([rbm_data, catalog_sample[['normalized_rating']].reset_index(drop=True)], axis=1)
 
-    num_visible = dados_rbm.shape[1]
+    num_visible = rbm_data.shape[1]
     num_hidden = 256
 
-    modelo_rbm = rbm.RBM(num_visible=num_visible, num_hidden=num_hidden)
+    rbm_model = rbm.RBM(num_visible=num_visible, num_hidden=num_hidden)
 
-    modelo_rbm.train(
-        data=dados_rbm.values,  
+    rbm_model.train(
+        data=rbm_data.values,  
         max_epochs=100,         
         learning_rate=0.01      
     )
 
-    mensagens = []
+    messages = []
 
-    for usuario_data in recData:
-        usuario_alugados = []
+    # Formatting for response by preferable genres
+    for user_data in recData:
+        rented_users = []
 
-        for item in usuario_data:
+        for item in user_data:
             if isinstance(item, dict) and 'Title' in item:
-                indice_filme = catalogo_amostra[catalogo_amostra['Title'] == item['Title']].index
-                if len(indice_filme) > 0:
-                    filme_data = dados_rbm.iloc[indice_filme[0]].values
-                    usuario_alugados.append(filme_data)
+                movie_index = catalog_sample[catalog_sample['Title'] == item['Title']].index
+                if len(movie_index) > 0:
+                    movie_data = rbm_data.iloc[movie_index[0]].values
+                    rented_users.append(movie_data)
         
-        if len(usuario_alugados) == 0:
-            usuario_alugados = np.zeros((3, dados_rbm.shape[1])) 
+        if len(rented_users) == 0:
+            rented_users = np.zeros((3, rbm_data.shape[1])) 
         else:
-            usuario_alugados = np.array(usuario_alugados)
+            rented_users = np.array(rented_users)
 
-            while len(usuario_alugados) < 3:
-                usuario_alugados = np.vstack([usuario_alugados, np.zeros(usuario_alugados[0].shape)])
+            while len(rented_users) < 3:
+                rented_users = np.vstack([rented_users, np.zeros(rented_users[0].shape)])
 
         # Fixed weights fixos (recently has more weight)
         weights = np.array([0.5, 0.3, 0.2])
 
-        perfil_usuario = np.average(usuario_alugados, axis=0, weights=weights).reshape(1, -1)
+        user_profile = np.average(rented_users, axis=0, weights=weights).reshape(1, -1)
 
         # Profile fit multipling for genre preferences
-        generos_usuario = usuario_alugados[:, :-1] 
-        preferencias_genero = np.average(generos_usuario, axis=0, weights=weights)
+        user_genres = rented_users[:, :-1] 
+        genres_preferences = np.average(user_genres, axis=0, weights=weights)
 
-        perfil_usuario_ajustado = perfil_usuario.copy()
-        perfil_usuario_ajustado[0, :-1] *= preferencias_genero 
+        user_profile_ajusted = user_profile.copy()
+        user_profile_ajusted[0, :-1] *= genres_preferences 
 
-        generos = dados_rbm.columns[:-1]  
+        genres = rbm_data.columns[:-1]  
 
-        perfil_genero_ajustado = perfil_usuario_ajustado[0, :-1] 
+        genre_profile_ajusted = user_profile_ajusted[0, :-1] 
 
-        generos_e_pesos = pd.DataFrame({
-            'Gênero': generos,
-            'Peso ajustado': perfil_genero_ajustado
+        genres_and_weights = pd.DataFrame({
+            'GENDER': genres,
+            'AJUSTED_WEIGHT': genre_profile_ajusted
         })
 
-        generos_e_pesos_sorted = generos_e_pesos.sort_values(by='Peso ajustado', ascending=False)
+        genres_and_weights_sorted = genres_and_weights.sort_values(by='AJUSTED_WEIGHT', ascending=False)
 
-        generos_importantes = generos_e_pesos_sorted.head(3)['Gênero'].values
+        important_genres = genres_and_weights_sorted.head(3)['GENDER'].values
 
-        perfil_usuario_ajustado = perfil_usuario.copy()
-        perfil_usuario_ajustado[0, :-1] *= (1 + preferencias_genero)
+        user_profile_ajusted = user_profile.copy()
+        user_profile_ajusted[0, :-1] *= (1 + genres_preferences)
 
-        recomendacao = modelo_rbm.run_visible(perfil_usuario_ajustado)
+        recommendation = rbm_model.run_visible(user_profile_ajusted)
 
-        limite_ativacao = 0.5
+        limit = 0.5
 
-        filmes_recomendados = []
+        recommended_movies = []
 
-        for i in range(len(recomendacao[0])):
+        for i in range(len(recommendation[0])):
             if (
-                i not in usuario_alugados and            
-                recomendacao[0, i] >= limite_ativacao and  
-                i < len(catalogo_amostra)              
+                i not in rented_users and            
+                recommendation[0, i] >= limit and  
+                i < len(catalog_sample)              
             ):
-                generos_filme = catalogo_amostra.iloc[i]['Genre']
-                genero_comum = any(genero in generos_importantes for genero in generos_filme)
+                movie_genres = catalog_sample.iloc[i]['Genre']
+                common_genre = any(genero in important_genres for genero in movie_genres)
                 
-                if genero_comum:
-                    filme_recomendado = {
-                        'titulo': catalogo_amostra.iloc[i]['Title'],
-                        'generos': catalogo_amostra.iloc[i]['Genre'][0], 
-                        'nota': catalogo_amostra.iloc[i]['nota_normalizada']
+                if common_genre:
+                    recommended_movie = {
+                        'movie': catalog_sample.iloc[i]['Title'],
+                        'genre': catalog_sample.iloc[i]['Genre'][0], 
+                        'rate': catalog_sample.iloc[i]['normalized_rating']
                     }
-                    filmes_recomendados.append(filme_recomendado)
+                    recommended_movies.append(recommended_movie)
 
-        filmes_recomendados_sorted = sorted(filmes_recomendados, key=lambda x: x['nota'], reverse=True)[:15]
+        recommended_movies_sorted = sorted(recommended_movies, key=lambda x: x['rate'], reverse=True)[:15]
 
-        mensagens.append(filmes_recomendados_sorted)
+        messages.append(recommended_movies_sorted)
 
-    return mensagens
+    return messages
