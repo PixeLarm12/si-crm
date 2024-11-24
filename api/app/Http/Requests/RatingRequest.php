@@ -12,7 +12,7 @@ class RatingRequest extends FormRequest
 		return [
 			'user_id'    => 'required|integer',
 			'product_id' => 'required|integer',
-			'rate'       => 'required|decimal:2,1',
+			'rate'       => 'required|numeric',
 		];
 	}
 
@@ -24,7 +24,7 @@ class RatingRequest extends FormRequest
 			'product_id.required' => 'Product ID is required',
 			'product_id.integer'  => 'Product ID must be integer',
 			'rate.required'       => 'Rate is required',
-			'rate.decimal'        => 'Rate must be decimal',
+			'rate.numeric'        => 'Rate must be numeric',
 		];
 	}
 

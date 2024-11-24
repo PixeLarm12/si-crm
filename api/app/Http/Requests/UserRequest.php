@@ -3,28 +3,35 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
 	public function rules() : array
 	{
-		return [
+		$rules = [
 			'name'                 => 'required|min:3|max:50',
 			'email'                => 'required|unique:users',
 			'password'             => 'required_unless:id,null|confirmed|min:8|max:60',
-			'password_confirm'     => 'required',
-			'cpf'                  => 'required|min:11|max:11',
+			'cpf'                  => 'required|min:11|max:11|unique:users',
 			'birth_date'           => 'required|date',
 			'address'              => 'required|min:3|max:120',
 			'address_number'       => 'required|min:1|max:15',
 			'address_neighborhood' => 'required|min:3|max:120',
-			'address_complement'   => 'sometimes|required|min:3|max:120',
+			'address_complement'   => 'sometimes|nullable|min:3|max:120',
 			'address_zipcode'      => 'required|min:8|max:8',
 			'role'                 => 'required|integer|min:1',
 			'phones'               => 'required|array|min:1',
-			'phones.*.user_id'     => 'required|integer',
 			'phones.*.phone'       => 'required|min:10|max:15',
 		];
+
+		if ($this->method() == 'PUT') {
+			$rules['password'] = 'nullable';
+			$rules['email'] = Rule::unique('users')->ignore($this->id);
+			$rules['cpf'] = Rule::unique('users')->ignore($this->id);
+		}
+
+		return $rules;
 	}
 
 	public function messages() : array
@@ -39,7 +46,6 @@ class UserRequest extends FormRequest
 			'password.min'                  => 'Password must have at least 8 characters',
 			'password.max'                  => 'Password cannot be longer than 60 characters',
 			'password.confirmed'            => 'Password and Password confirm must match each other',
-			'password_confirm.required'     => 'Password confirm is required',
 			'cpf.required'                  => 'CPF is required',
 			'cpf.min'                       => 'CPF must have at least 11 characters to match CPF format',
 			'cpf.max'                       => 'CPF cannot be longer than 11 characters',
@@ -62,11 +68,9 @@ class UserRequest extends FormRequest
 			'role.required'                 => 'Role is required',
 			'role.min'                      => 'Role needs to be greater than 0',
 			'role.integer'                  => 'Role must be integer',
-			'phones.required'               => 'Phone is required',
+			'phones.required'               => 'At least one Phone is required',
 			'phones.array'                  => 'Phone must be array',
 			'phones.min'                    => 'Phone must have at least 1 added',
-			'phones.*.user_id.required'     => 'Phone user ID is required',
-			'phones.*.user_id.integer'      => 'Phone user ID must be integer',
 			'phones.*.phone.required'       => 'Phone number is required',
 			'phones.*.phone.min'            => 'Phone number must have at least 10 numbers',
 			'phones.*.phone.max'            => 'Phone number cannot be longer than 15 numbers',
@@ -75,10 +79,9 @@ class UserRequest extends FormRequest
 
 	public function getData() : array
 	{
-		return [
+		$data = [
 			'name'                 => $this->input('name'),
 			'email'                => $this->input('email'),
-			'password'             => $this->input('password'),
 			'cpf'                  => $this->input('cpf'),
 			'birth_date'           => $this->input('birth_date'),
 			'address'              => $this->input('address'),
@@ -89,5 +92,11 @@ class UserRequest extends FormRequest
 			'role'                 => $this->input('role'),
 			'phones'               => $this->input('phones'),
 		];
+
+		if ($this->method() == 'POST') {
+			$data['password'] = $this->input('password') ?? null;
+		}
+
+		return $data;
 	}
 }

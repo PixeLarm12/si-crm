@@ -55,7 +55,7 @@ abstract class BaseService
 	 *
 	 * @param int $id
 	 * @param array $data
-	 * @return Model
+	 * @return bool
 	 */
 	public function updateRecord(int $id, array $data) : bool
 	{
