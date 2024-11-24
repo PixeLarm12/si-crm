@@ -64,4 +64,4 @@ It's useful files that has some commons methods to centralize in one file and be
 
 # References
 
-* Laravel Reports Docs: [Access here](https://github.com/LaravelDaily/laravel-charts)
+* Laravel Reports Docs: [Access here](https://quickchart.io/documentation/)
