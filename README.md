@@ -61,3 +61,7 @@ It's useful files that has some commons methods to centralize in one file and be
 **BaseService:** have the same Laravel Resource methods but with 'Record' suffix. Use related method from Repository instantiated to access database following *CSR pattern*
 
 **BaseController:** have Service instantiated to be able to handle with http requests correctly and also follow *CSR pattern* calling related service methods. `BaseController` have an default method to create default response to API Rest.
+
+# References
+
+* Laravel Reports Docs: [Access here](https://quickchart.io/documentation/)
