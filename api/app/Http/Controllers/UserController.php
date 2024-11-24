@@ -40,10 +40,10 @@ class UserController extends BaseController
 	{
 		return $this->defaultResponse($this->service->deleteRecord($id), Response::HTTP_NO_CONTENT);
 	}
-	
+
 	public function importLeads(Request $request)
 	{
-		Excel::import(new LeadsImport, $request->file('leads'));
+		Excel::import(new LeadsImport(), $request->file('leads'));
 
 		return $this->defaultResponse([], Response::HTTP_CREATED);
 	}

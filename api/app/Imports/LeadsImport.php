@@ -4,69 +4,67 @@ namespace App\Imports;
 
 use App\Enums\UserEnum;
 use App\Models\User;
-use Carbon\Carbon;
 use DB;
 use Exception;
 use Hash;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\ToModel;
 
 class LeadsImport implements ToCollection
 {
-    private int $current = 0;
-    
-    /**
-    * @param Collection $collection
-    */
-    public function collection(Collection $collection)
-    {
-        DB::beginTransaction();
+	private int $current = 0;
 
-        try {
-            $totalItems = count($collection);
+	/**
+	 * @param Collection $collection
+	 */
+	public function collection(Collection $collection)
+	{
+		DB::beginTransaction();
 
-            foreach($collection as $key => $lead) {
-                if($key == ($totalItems - 1)) {
-                    break;
-                }
+		try {
+			$totalItems = count($collection);
 
-                if($key > 0) {
-                    $dateString = str_replace('"', '', trim($lead[4]));
-                    $timestamp = strtotime(str_replace('/', '-', $dateString));
+			foreach ($collection as $key => $lead) {
+				if ($key == ($totalItems - 1)) {
+					break;
+				}
 
-                    $emailDuplicatedCounter = User::where('email', $lead[1])->count();
-                    $cpfDuplicatedCounter = User::where('cpf', $lead[3])->count();
+				if ($key > 0) {
+					$dateString = str_replace('"', '', trim($lead[4]));
+					$timestamp = strtotime(str_replace('/', '-', $dateString));
 
-                    if(empty($emailDuplicatedCounter) && empty($cpfDuplicatedCounter)) {
-                        $user = User::create(
-                            [
-                                "name" => trim($lead[0]),
-                                "email" => trim($lead[1]),
-                                "password" => trim(Hash::make($lead[2])),
-                                "cpf" => trim((int) $lead[3]),
-                                "birth_date" => date('Y-m-d', $timestamp),
-                                "address" => trim($lead[5]),
-                                "address_number" => trim((int) $lead[6]),
-                                "address_neighborhood" => trim($lead[7]),
-                                "address_complement" => trim($lead[8] ?? '-----'),
-                                "address_zipcode" => trim((int) $lead[9]),
-                                "role" => UserEnum::CLIENT
-                            ]
-                        );
+					$emailDuplicatedCounter = User::where('email', $lead[1])->count();
+					$cpfDuplicatedCounter = User::where('cpf', $lead[3])->count();
 
-                        $user->phones()->create([
-                            'phone' => trim((int) $lead[10])
-                        ]);
-                    }
-                }
-            }
+					if (empty($emailDuplicatedCounter) && empty($cpfDuplicatedCounter)) {
+						$user = User::create(
+							[
+								'name'                 => trim($lead[0]),
+								'email'                => trim($lead[1]),
+								'password'             => trim(Hash::make($lead[2])),
+								'cpf'                  => trim((int) $lead[3]),
+								'birth_date'           => date('Y-m-d', $timestamp),
+								'address'              => trim($lead[5]),
+								'address_number'       => trim((int) $lead[6]),
+								'address_neighborhood' => trim($lead[7]),
+								'address_complement'   => trim($lead[8] ?? '-----'),
+								'address_zipcode'      => trim((int) $lead[9]),
+								'role'                 => UserEnum::CLIENT,
+							]
+						);
 
-            DB::commit();
-        }  catch (Exception $e) {
-            DB::rollback();
-    
-            return response()->json(['error' => 'An error occurred when importing leads'], 500);
-        }
-    }
+						$user->phones()->create([
+							'phone' => trim((int) $lead[10]),
+						]);
+					}
+				}
+			}
+
+			DB::commit();
+		} catch (Exception $e) {
+			DB::rollback();
+
+			return response()->json(['error' => 'An error occurred when importing leads'], 500);
+		}
+	}
 }
