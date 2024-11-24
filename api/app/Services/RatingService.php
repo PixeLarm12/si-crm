@@ -25,7 +25,7 @@ class RatingService extends BaseService
 	 * @var ProductService
 	 */
 	protected ProductService $productService;
-	
+
 	public function __construct(RatingRepository $repository)
 	{
 		parent::__construct($repository);
@@ -39,29 +39,29 @@ class RatingService extends BaseService
 	{
 		$user = $this->userService->findRecord($id);
 
-		if(!$user) {
+		if (!$user) {
 			throw new ModelNotFoundException('User not found to recommend');
 		}
 
 		$ratings = $user->ratings->toArray();
 
-		if(count($ratings) > 0) {
+		if (count($ratings) > 0) {
 			$dataToRecommend = [];
 
-			foreach($ratings as $rating) {
-				$product = $this->productService->findRecord($rating["product_id"]);
+			foreach ($ratings as $rating) {
+				$product = $this->productService->findRecord($rating['product_id']);
 
 				array_push($dataToRecommend, [
 					$product->title,
 					$product->genres->first()->title ?? 'no-genre-provided',
-					(float) $rating['rate']
+					(float) $rating['rate'],
 				]);
 			}
 
 			array_unshift($dataToRecommend, [
-				"Title",
-				"Genre",
-				"Rating",
+				'Title',
+				'Genre',
+				'Rating',
 			]);
 		}
 
