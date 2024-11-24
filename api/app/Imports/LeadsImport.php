@@ -64,7 +64,7 @@ class LeadsImport implements ToCollection
 		} catch (Exception $e) {
 			DB::rollback();
 
-			return response()->json(['error' => 'An error occurred when importing leads'], 500);
+			return response()->json(['error' => 'An error occurred when importing leads ' . $e->getMessage()], 500);
 		}
 	}
 }
