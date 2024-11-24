@@ -89,7 +89,7 @@
     php-cs-fixer:
       runs-on: ubuntu-latest
       needs:
-        - unit-tests
+        - environment
 
       steps:
       - name: Checkout code
@@ -120,7 +120,7 @@
     phplint:
       runs-on: ubuntu-latest
       needs: 
-        - unit-tests
+        - environment
       steps:
         - name: Checkout code
           uses: actions/checkout@v4
