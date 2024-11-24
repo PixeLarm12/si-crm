@@ -3,13 +3,25 @@
 namespace App\Services;
 
 use App\Enums\ChartEnum;
+use App\Enums\ReportEnum;
 use App\Enums\SaleEnum;
+use App\Models\Sale;
+use App\Repositories\SaleRepository;
 use Barryvdh\DomPDF\PDF;
-use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 use QuickChart;
 
 class ReportService
 {
+	/**
+	 * @var SaleRepository
+	 */
+	protected SaleRepository $saleRepository;
+
+	public function __construct()
+	{
+		$this->saleRepository = new SaleRepository(new Sale());
+	}
+
     /**
 	 * Create Sale report per period.
 	 *
@@ -17,37 +29,36 @@ class ReportService
 	 */
 	public function generateSalePerPeriodReport(string $period): string
 	{
+		if (!in_array($period, [SaleEnum::REPORT_MONTHLY, SaleEnum::REPORT_ANNUAL])) {
+			$period = SaleEnum::REPORT_ANNUAL;
+		}
+
+		$sales = $this->saleRepository->getSalesGroupedToReport($period);
+
 		$quickChart = new QuickChart([
-			'width' => 500,
-			'height' => 300,
+			'width' => 700,
+			'height' => 400,
 			'version' => '2',
 		]);
 
 		$config = [
-			"type" => 'bar',
+			"type" => ChartEnum::REPORT_CHART_TYPE_BAR,
 			"data" => [
-				"labels" => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+				"labels" => $sales['labels'],
 				"datasets" => [
 					[
-						"label" => 'Dataset 1',
+						"label" => 'Total sold ' . $period . ' ($)',
 						"backgroundColor" => 'rgba(255, 99, 132, 0.5)',
 						"borderColor" => 'rgb(255, 99, 132)',
 						"borderWidth" => 1,
-						"data" => [-31, -70, -30, -33, -9, 14, -41],
+						"data" => $sales['dataset'],
 					],
-					[
-						"label" => 'Dataset 2',
-						"backgroundColor" => 'rgba(54, 162, 235, 0.5)',
-						"borderColor" => 'rgb(54, 162, 235)',
-						"borderWidth" => 1,
-						"data" => [73, 41, 29, 61, -65, 59, 38],
-					]
 				],
 			],
 			"options" => [
 				"title" => [
 					"display" => true,
-					"text" => 'Bar Chart',
+					"text" => 'Sales ' . $period,
 				],
 				"plugins" => [
 					"datalabels" => [
@@ -70,12 +81,17 @@ class ReportService
 	 * Generate PDF file.
 	 *
 	 * @param string $html 
+	 * @param string $format (landscape or portrait) 
 	 * @return PDF
 	 */
-    public function generatePDF(string $html): PDF
+    public function generatePDF(string $html, string $format = ReportEnum::PAGE_FORMAT_PORTRAIT): PDF
     {
+		if (!in_array($format, [ReportEnum::PAGE_FORMAT_LANDSCAPE, ReportEnum::PAGE_FORMAT_PORTRAIT])) {
+			$format = ReportEnum::PAGE_FORMAT_PORTRAIT;
+		}
+
         $pdf = app('dompdf.wrapper');
 
-		return $pdf->loadHTML($html)->setPaper('a4', 'landscape');
+		return $pdf->loadHTML($html)->setPaper('a4', $format);
     }
 }
