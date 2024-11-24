@@ -8,4 +8,5 @@ class SaleEnum extends AbstractEnum
 
 	public const REPORT_ANNUAL = 'annual';
 	public const REPORT_MONTHLY = 'monthly';
+	public const REPORT_VIEW = 'sale_report';
 }

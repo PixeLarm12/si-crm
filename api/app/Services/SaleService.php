@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Enums\SaleEnum;
 use App\Repositories\SaleRepository;
 use Illuminate\Database\Eloquent\Model;
+use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class SaleService extends BaseService
 {
@@ -47,5 +49,21 @@ class SaleService extends BaseService
 		}
 
 		return (bool) $sale;
+	}
+
+	public function generateReport(string $period): LaravelChart
+	{
+		$title = ($period == SaleEnum::REPORT_MONTHLY) ? "monthly" : "annual";
+
+		$options = [
+			'chart_title' => 'Sale ' . $title,
+			'report_type' => 'group_by_date',
+			'model' => 'App\Models\Sale',
+			'group_by_field' => 'date',
+			'group_by_period' => ($period == SaleEnum::REPORT_MONTHLY) ? "month" : "year",
+			'chart_type' => 'bar',
+		];
+
+		return new LaravelChart($options);
 	}
 }

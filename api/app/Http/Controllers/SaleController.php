@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\SaleEnum;
 use App\Http\Requests\SaleRequest;
 use App\Services\SaleService;
-use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 use Symfony\Component\HttpFoundation\Response;
 
 class SaleController extends BaseController
@@ -42,19 +41,7 @@ class SaleController extends BaseController
 
 	public function reportGenerate(string $period)
 	{
-		$title = ($period == SaleEnum::REPORT_MONTHLY) ? "monthly" : "annual";
-
-		$options = [
-			'chart_title' => 'Sale ' . $title,
-			'report_type' => 'group_by_date',
-			'model' => 'App\Models\Sale',
-			'group_by_field' => 'date',
-			'group_by_period' => ($period == SaleEnum::REPORT_MONTHLY) ? "month" : "year",
-			'chart_type' => 'bar',
-		];
-
-		$chart = new LaravelChart($options);
-
-		return view('sale_report', compact('chart'));
+		$chart = $this->service->generateReport($period);
+		return view(SaleEnum::REPORT_VIEW, compact('chart'));
 	}
 }
