@@ -89,6 +89,7 @@ Route::prefix(RatingEnum::ROUTE_PREFIX)->group(function () {
 Route::prefix(SaleEnum::ROUTE_PREFIX)->group(function () {
 	Route::get('/', [SaleController::class, 'index'])->name('sales.index');
 	Route::get('/{id}', [SaleController::class, 'show'])->name('sales.show');
+	Route::get('/report/generate/{period}', [SaleController::class, 'reportGenerate'])->name('sales.reportGenerate');
 	Route::post('/', [SaleController::class, 'store'])->name('sales.store');
 	Route::put('/{id}', [SaleController::class, 'update'])->name('sales.update');
 	Route::delete('/{id}', [SaleController::class, 'destroy'])->name('sales.delete');
