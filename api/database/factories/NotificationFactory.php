@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\NotificationEnum;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,8 +19,8 @@ class NotificationFactory extends Factory
 	public function definition() : array
 	{
 		return [
-			'user_id'    => $this->faker->numberBetween(1, 10),
-			'title'      => $this->faker->word,
+			'user_id'    => User::query()->inRandomOrder()->value('id'),
+			'title'      => $this->faker->sentence(2),
 			'message'    => $this->faker->text(255),
 			'type'       => $this->faker->randomElement([NotificationEnum::TYPE_PURCHASE, NotificationEnum::TYPE_OFFER, NotificationEnum::TYPE_PROBLEM]),
 			'date'       => $this->faker->dateTimeBetween('-1 year', 'now'),

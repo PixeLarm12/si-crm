@@ -16,7 +16,7 @@ class AssistanceRequest extends FormRequest
 			'type'       => 'required|integer',
 			'subject'    => 'required|min:3|max:50',
 			'message'    => 'required|min:3|max:255',
-			'close_date' => 'sometimes|required|date',
+			'close_date' => 'sometimes|nullable|date',
 			'status'     => 'sometimes|required|integer',
 		];
 	}

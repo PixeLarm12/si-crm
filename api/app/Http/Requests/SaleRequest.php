@@ -11,12 +11,12 @@ class SaleRequest extends FormRequest
 	{
 		return [
 			'user_id'             => 'required|integer',
-			'total_price'         => 'required|decimal:10,2',
+			'total_price'         => 'required|numeric',
 			'items'               => 'required|array',
 			'items.*.product_id'  => 'required|integer',
 			'items.*.amount'      => 'required|integer',
-			'items.*.unit_price'  => 'required|decimal:10,2',
-			'items.*.total_price' => 'required|decimal:10,2',
+			'items.*.unit_price'  => 'required|numeric',
+			'items.*.total_price' => 'required|numeric',
 		];
 	}
 
@@ -24,7 +24,7 @@ class SaleRequest extends FormRequest
 	{
 		return [
 			'total_price.required'         => 'Total price is required',
-			'total_price.decimal'          => 'Total price must be decimal value',
+			'total_price.numeric'          => 'Total price must be numeric value',
 			'user_id.required'             => 'User ID is required',
 			'user_id.integer'              => 'User ID must be integer',
 			'items.array'                  => 'Items must be an array',
@@ -33,9 +33,9 @@ class SaleRequest extends FormRequest
 			'items.*.amount.required'      => 'Item amount is required',
 			'items.*.amount.integer'       => 'Item amount must be an integer',
 			'items.*.unit_price.required'  => 'Item unit price is required',
-			'items.*.unit_price.decimal'   => 'Item unit price must be decimal',
+			'items.*.unit_price.numeric'   => 'Item unit price must be numeric',
 			'items.*.total_price.required' => 'Item total price is required',
-			'items.*.total_price.decimal'  => 'Item total price must be decimal',
+			'items.*.total_price.numeric'  => 'Item total price must be numeric',
 		];
 	}
 
@@ -44,7 +44,7 @@ class SaleRequest extends FormRequest
 		return [
 			'user_id'     => $this->input('user_id'),
 			'total_price' => $this->input('total_price'),
-			'date'        => Carbon::now(),
+			'date'        => $this->input('date') ?? Carbon::now(),
 			'items'       => $this->input('items'),
 		];
 	}
