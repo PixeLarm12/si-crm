@@ -5,5 +5,5 @@ namespace App\Enums;
 class AIModelEnum
 {
     public const PROD_URL = '';
-    public const LOCAL_URL = 'localhost:5000/';
+    public const LOCAL_URL = 'http://crm-flask:5000/';
 }

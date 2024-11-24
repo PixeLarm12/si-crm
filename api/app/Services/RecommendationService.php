@@ -18,8 +18,30 @@ class RecommendationService
         }
 	}
 
-	public function recommendForUser(array $ratings)
+	public function recommendForUser(array $data)
 	{
-		dd($ratings);
+      $ch = curl_init();
+
+      curl_setopt($ch, CURLOPT_URL, $this->url);
+      curl_setopt($ch, CURLOPT_POST, 1);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+      curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+      curl_setopt($ch, CURLOPT_HTTPHEADER, [
+          'Content-Type: application/json',
+          'Accept: application/json',
+      ]);
+
+      $response = curl_exec($ch);
+
+      if ($error = curl_error($ch)) {
+          curl_close($ch);
+          return 'Error:' . $error;
+      }
+
+      curl_close($ch);
+
+      return json_decode($response, true);
 	}
 }

@@ -22,8 +22,8 @@ class Product extends Model
 		'status',
 	];
 
-	public function genres() : HasMany
-	{
-		return $this->hasMany(Genre::class, ProductGenre::class, 'product_id');
-	}
+	public function genres()
+    {
+        return $this->belongsToMany(Genre::class, 'products_genres', 'product_id', 'genre_id');
+    }
 }
