@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AuthEnum;
 use App\Enums\GenreEnum;
 use App\Enums\RatingEnum;
 use App\Enums\SaleEnum;
@@ -8,6 +9,7 @@ use App\Enums\ProductEnum;
 use App\Enums\AssistanceEnum;
 use App\Enums\NotificationEnum;
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
@@ -16,6 +18,14 @@ use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AssistanceController;
 use App\Http\Controllers\NotificationController;
+
+/**
+ * AUTH
+ */
+Route::prefix(AuthEnum::ROUTE_PREFIX)->group(function () {
+	Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+	Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+});
 
 /**
  * USERS
