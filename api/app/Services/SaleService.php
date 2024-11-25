@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\NotificationEnum;
 use App\Repositories\SaleRepository;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +24,9 @@ class SaleService extends BaseService
 		$sale = parent::saveRecord($data);
 
 		$sale->items()->createMany($data['items']);
+
+		$notificationService = new NotificationService();
+		$notificationService->setNotification($data['user_id'], NotificationEnum::TYPE_PURCHASE);
 
 		return $sale;
 	}
