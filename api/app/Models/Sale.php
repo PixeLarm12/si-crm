@@ -18,6 +18,12 @@ class Sale extends Model
 		'date',
 	];
 
+	protected $hidden = [
+		'created_at',
+		'updated_at',
+		'deleted_at',
+	];
+
 	protected static function boot()
 	{
 		parent::boot();

@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Repositories\ProductRepository;
+use App\Repositories\LogRepository;
 
-class ProductService extends BaseService
+class LogService extends BaseService
 {
-	public function __construct(ProductRepository $repository)
+	public function __construct(LogRepository $repository)
 	{
 		parent::__construct($repository);
 	}

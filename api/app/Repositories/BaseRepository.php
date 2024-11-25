@@ -78,4 +78,9 @@ abstract class BaseRepository
 
 		return $record->delete();
 	}
+
+	public function getModel() : string
+	{
+		return get_class($this->model);
+	}
 }
