@@ -20,6 +20,12 @@ class SaleItem extends Model
 		'total_price',
 	];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
 	public function sale() : BelongsTo
 	{
 		return $this->belongsTo(Sale::class);

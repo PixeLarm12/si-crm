@@ -15,70 +15,74 @@ class User extends Authenticatable implements JWTSubject
 	use SoftDeletes;
 	use HasFactory;
 
-	protected $table = 'users';
+    protected $table = 'users';
 
-	protected $fillable = [
-		'name',
-		'email',
-		'password',
-		'cpf',
-		'birth_date',
-		'address',
-		'address_number',
-		'address_neighborhood',
-		'address_complement',
-		'address_zipcode',
-		'role',
-	];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'cpf',
+        'birth_date',
+        'address',
+        'address_number',
+        'address_neighborhood',
+        'address_complement',
+        'address_zipcode',
+        'role',
+    ];
 
-	protected $hidden = [
-		'password',
-	];
+    protected $hidden = [
+        'password',
+        'created_at',
+        'updated_at',
+        'deleted_at',
 
-	protected function casts() : array
-	{
-		return [
-			'password' => 'hashed',
-		];
-	}
+    ];
 
-	public function getJWTIdentifier()
-	{
-		return $this->getKey();
-	}
+    protected function casts() : array
+    {
+        return [
+            'password' => 'hashed',
+        ];
+    }
 
-	public function getJWTCustomClaims()
-	{
-		return [];
-	}
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
 
-	public function ratings() : HasMany
-	{
-		return $this->hasMany(Rating::class);
-	}
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
-	public function openedAssistances() : HasMany
-	{
-		return $this->hasMany(Assistance::class, 'opened_by');
-	}
+    public function ratings() : HasMany
+    {
+        return $this->hasMany(Rating::class);
+    }
 
-	public function relatedAssistances() : HasMany
-	{
-		return $this->hasMany(Assistance::class, 'admin_id');
-	}
+    public function openedAssistances() : HasMany
+    {
+        return $this->hasMany(Assistance::class, 'opened_by');
+    }
 
-	public function sales() : HasMany
-	{
-		return $this->hasMany(Sale::class);
-	}
+    public function relatedAssistances() : HasMany
+    {
+        return $this->hasMany(Assistance::class, 'admin_id');
+    }
 
-	public function phones() : HasMany
-	{
-		return $this->hasMany(Phone::class);
-	}
+    public function sales() : HasMany
+    {
+        return $this->hasMany(Sale::class);
+    }
 
-	public function notifications() : HasMany
-	{
-		return $this->hasMany(Notification::class);
-	}
+    public function phones() : HasMany
+    {
+        return $this->hasMany(Phone::class);
+    }
+
+    public function notifications() : HasMany
+    {
+        return $this->hasMany(Notification::class);
+    }
 }

@@ -23,6 +23,12 @@ class Assistance extends Model
 		'status',
 	];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
 	public function openedByUser() : BelongsTo
 	{
 		return $this->belongsTo(User::class, 'opened_by');

@@ -10,4 +10,9 @@ class ProductRepository extends BaseRepository
 	{
 		parent::__construct($model);
 	}
+
+    public function all() : \Illuminate\Support\Collection
+    {
+        return $this->model->with('genres')->filter(request()->only('search'))->get();
+    }
 }
