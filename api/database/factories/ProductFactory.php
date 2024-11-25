@@ -19,7 +19,7 @@ class ProductFactory extends Factory
 	{
 		return [
 			'title'  => $this->faker->sentence(2),
-			'price'  => $this->faker->randomFloat(2, 0.5, 3000), 
+			'price'  => $this->faker->randomFloat(2, 0.5, 3000),
 			'amount' => $this->faker->numberBetween(1, 100),
 			'status' => $this->faker->randomElement([ProductEnum::STATUS_DRAFT, ProductEnum::STATUS_PUBLISHED]),
 		];

@@ -35,12 +35,12 @@ class GenreSeeder extends Seeder
 			'Family',
 			'Musical',
 			'Western',
-			'Film-Noir'
+			'Film-Noir',
 		];
 
-		foreach($dataFromDataset as $genre) {
+		foreach ($dataFromDataset as $genre) {
 			Genre::create([
-				'title' => $genre
+				'title' => $genre,
 			]);
 		}
 	}
