@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Enums\LogEnum;
 use App\Models\Log;
 use App\Repositories\BaseRepository;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseService
@@ -24,9 +23,9 @@ abstract class BaseService
 	 * List all records from Repository.
 	 *
 	 * @return \Illuminate\Support\Collection
-     */
+	 */
 	public function getAllRecords() : \Illuminate\Support\Collection
-    {
+	{
 		return $this->repository->all();
 	}
 
@@ -38,15 +37,16 @@ abstract class BaseService
 	 */
 	public function saveRecord(array $data) : Model
 	{
-        $user = $this->repository->create($data);
+		$user = $this->repository->create($data);
 
 		Log::create([
-			'user_id' => auth()->id(),
-			'action' => LogEnum::CREATE,
-			'model' => $this->repository->getModel(),
-            'model_id' => $user->id,
-            'data' => json_encode($data)
+			'user_id'  => auth()->id(),
+			'action'   => LogEnum::CREATE,
+			'model'    => $this->repository->getModel(),
+			'model_id' => $user->id,
+			'data'     => json_encode($data),
 		]);
+
 		return $user;
 	}
 
@@ -69,15 +69,15 @@ abstract class BaseService
 	 */
 	public function updateRecord(int $id, array $data) : Model
 	{
-        $record = $this->repository->find($id);
-        $record->update($data);
+		$record = $this->repository->find($id);
+		$record->update($data);
 
 		Log::create([
-			'user_id' => auth()->id(),
-			'action' => LogEnum::UPDATE,
-			'model' => $this->repository->getModel(),
-            'model_id' => $id,
-            'data' => json_encode($data)
+			'user_id'  => auth()->id(),
+			'action'   => LogEnum::UPDATE,
+			'model'    => $this->repository->getModel(),
+			'model_id' => $id,
+			'data'     => json_encode($data),
 		]);
 
 		return $record;
@@ -93,13 +93,13 @@ abstract class BaseService
 	public function deleteRecord(int $id) : ?bool
 	{
 		Log::create([
-			'user_id' => auth()->id(),
-			'action' => LogEnum::DELETE,
-			'model' => $this->repository->getModel(),
-            'model_id' => $id,
-            'data' => json_encode([
-                'id' => $id
-            ])
+			'user_id'  => auth()->id(),
+			'action'   => LogEnum::DELETE,
+			'model'    => $this->repository->getModel(),
+			'model_id' => $id,
+			'data'     => json_encode([
+				'id' => $id,
+			]),
 		]);
 		$record = $this->repository->find($id);
 

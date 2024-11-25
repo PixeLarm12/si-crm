@@ -21,6 +21,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AssistanceController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\LogController;
+
 /**
  * AUTH
  */
@@ -36,8 +37,8 @@ Route::middleware([JwtMiddleware::class])->group(function () {
 	Route::prefix(UserEnum::ROUTE_PREFIX)->group(function () {
 		Route::get('/', [UserController::class, 'index'])->name('users.index')->middleware(RoleMiddleware::class . ':' . UserEnum::ADMIN . '-' . UserEnum::EMPLOYEE . '');
 		Route::post('/', [UserController::class, 'store'])->name('users.store');
-        Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
-        Route::get('/{id}', [UserController::class, 'show'])->name('users.show');
+		Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
+		Route::get('/{id}', [UserController::class, 'show'])->name('users.show');
 		Route::post('/import/leads', [UserController::class, 'importLeads'])->name('users.importLeads')->middleware(RoleMiddleware::class . ':' . UserEnum::ADMIN);
 		Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.delete');
 	});
@@ -111,11 +112,11 @@ Route::middleware([JwtMiddleware::class])->group(function () {
 		Route::delete('/{id}', [SaleController::class, 'destroy'])->name('sales.delete')->middleware(RoleMiddleware::class . ':' . UserEnum::ADMIN);
 	});
 
-    /**
-     * Logs
-     */
-    Route::prefix('logs')->group(function () {
-        Route::get('/', [LogController::class, 'index'])->name('logs.index')->middleware(RoleMiddleware::class . ':' . UserEnum::ADMIN);
-    });
-    });
+	/**
+	 * Logs
+	 */
+	Route::prefix('logs')->group(function () {
+		Route::get('/', [LogController::class, 'index'])->name('logs.index')->middleware(RoleMiddleware::class . ':' . UserEnum::ADMIN);
+	});
+});
 

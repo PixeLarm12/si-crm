@@ -36,7 +36,7 @@ class SaleService extends BaseService
 	 */
 	public function updateRecord(int $id, array $data) : Model
 	{
-        $updated = parent::updateRecord($id, $data);
+		$updated = parent::updateRecord($id, $data);
 		$sale = $this->repository->find($id);
 
 		$sale->update($data);

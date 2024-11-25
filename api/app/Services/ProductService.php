@@ -11,8 +11,8 @@ class ProductService extends BaseService
 		parent::__construct($repository);
 	}
 
-    public function getAllRecords(): \Illuminate\Support\Collection
-    {
-        return $this->repository->all();
-    }
+	public function getAllRecords() : \Illuminate\Support\Collection
+	{
+		return $this->repository->all();
+	}
 }
