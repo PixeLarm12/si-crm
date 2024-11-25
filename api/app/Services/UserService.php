@@ -7,45 +7,44 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserService extends BaseService
 {
-	public function __construct(UserRepository $repository)
-	{
-		parent::__construct($repository);
-	}
+    public function __construct(UserRepository $repository)
+    {
+        parent::__construct($repository);
+    }
 
-	/**
-	 * Create a new record with Repository.
-	 *
-	 * @param array $data
-	 * @return Model
-	 */
-	public function saveRecord(array $data) : Model
-	{
-		$user = $this->repository->create($data);
+    /**
+     * Create a new record with Repository.
+     *
+     * @param array $data
+     * @return Model
+     */
+    public function saveRecord(array $data) : Model
+    {
+        $user = parent::saveRecord($data);
 
-		$user->phones()->createMany($data['phones']);
+        $user->phones()->createMany($data['phones']);
 
-		return $user;
-	}
+        return $user;
+    }
 
-	/**
-	 * Update record with Repository by ID.
-	 *
-	 * @param int $id
-	 * @param array $data
-	 * @return Model
-	 */
-	public function updateRecord(int $id, array $data) : bool
-	{
-		$user = $this->repository->find($id);
+    /**
+     * Update record with Repository by ID.
+     *
+     * @param int $id
+     * @param array $data
+     * @return Model
+     */
+    public function updateRecord(int $id, array $data) : Model
+    {
+        $updated = parent::updateRecord($id, $data);
 
-		$user->update($data);
+        $user = $this->repository->find($id);
 
-		if ($data['phones']) {
-			$user->phones()->delete();
+        if ($data['phones']) {
+            $user->phones()->delete();
+            $user->phones()->createMany($data['phones']);
+        }
 
-			$user->phones()->createMany($data['phones']);
-		}
-
-		return (bool) $user;
-	}
+        return $updated;
+    }
 }
