@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         apiPrefix: AbstractEnum::API_ROUTE_PREFIX
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // 
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (Throwable $e) {
