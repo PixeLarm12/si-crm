@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
 		$admin = User::create([
 			'name'                 => 'User Admin',
 			'email'                => 'user_email@email.com',
-			'password'             => Hash::make('123456'),
+			'password'             => Hash::make('12345678'),
 			'cpf'                  => '00000000000',
 			'birth_date'           => '2000-01-01',  // Data de nascimento (maior de idade)
 			'address'              => 'Street',
