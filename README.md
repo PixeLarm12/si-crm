@@ -36,7 +36,7 @@ This is a CRM system made by students from UNESP Bauru, Information System's cou
     - `php artisan key:generate`
     - `php artisan jwt:secret`
 
-5. Run `php artisan migrate` to fill database
+5. Run `php artisan migrate:fresh --seed` to fill database
 
 6. Access `localhost/api` from your browser to check routes.
 
