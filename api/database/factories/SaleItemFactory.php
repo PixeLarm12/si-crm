@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Product;
 use App\Models\Sale;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,7 +22,7 @@ class SaleItemFactory extends Factory
 
 		return [
 			'sale_id'     => Sale::query()->inRandomOrder()->value('id'),
-			'product_id'  => Product::query()->inRandomOrder()->value('id'),
+			'product_id'  => $this->faker->numberBetween(1, 10000),
 			'amount'      => $amount,
 			'unit_price'  => $unitPrice,
 			'total_price' => (float) ($amount * $unitPrice),

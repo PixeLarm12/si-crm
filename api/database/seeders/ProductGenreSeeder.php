@@ -12,6 +12,6 @@ class ProductGenreSeeder extends Seeder
 	 */
 	public function run() : void
 	{
-		ProductGenre::factory()->count(1000)->create();
+		ProductGenre::factory()->count(200)->create();
 	}
 }

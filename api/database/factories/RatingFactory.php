@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +19,7 @@ class RatingFactory extends Factory
 	{
 		return [
 			'user_id'    => User::query()->inRandomOrder()->value('id'),
-			'product_id' => Product::query()->inRandomOrder()->value('id'),
+			'product_id' => $this->faker->numberBetween(1, 10000),
 			'rate'       => $this->faker->randomFloat(1, 1, 5),
 			'date'       => $this->faker->dateTimeBetween('-1 year', 'now'),
 		];
