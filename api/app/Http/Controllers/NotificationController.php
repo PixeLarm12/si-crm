@@ -28,6 +28,11 @@ class NotificationController extends BaseController
 		return $this->defaultResponse($this->service->findRecord($id));
 	}
 
+	public function check(string $id)
+	{
+		return $this->defaultResponse(data: $this->service->checkNotification($id));
+	}
+
 	public function update(NotificationRequest $request, string $id)
 	{
 		return $this->defaultResponse($this->service->updateRecord($id, $request->getData()), Response::HTTP_CREATED);
