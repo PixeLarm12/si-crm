@@ -10,7 +10,7 @@ class ProductRequest extends FormRequest
 	public function rules() : array
 	{
 		return [
-			'title'  => 'required|min:3|max:50',
+			'title'  => 'required|min:3|max:150',
 			'price'  => 'required|numeric',
 			'amount' => 'required|integer',
 			'status' => 'sometimes|nullable|integer',
@@ -22,7 +22,7 @@ class ProductRequest extends FormRequest
 		return [
 			'title.required'  => 'Title is required',
 			'title.min'       => 'Title must have at least 3 characters',
-			'title.max'       => 'Title cannot be longer than 50 characters',
+			'title.max'       => 'Title cannot be longer than 150 characters',
 			'price.numeric'   => 'Price must be numeric',
 			'amount.required' => 'Amount is required',
 			'amount.integer'  => 'Amount must be integer',
