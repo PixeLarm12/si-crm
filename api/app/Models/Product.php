@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -22,8 +21,8 @@ class Product extends Model
 		'status',
 	];
 
-	public function genres() : HasMany
+	public function genres()
 	{
-		return $this->hasMany(Genre::class, ProductGenre::class, 'product_id');
+		return $this->belongsToMany(Genre::class, 'products_genres', 'product_id', 'genre_id');
 	}
 }

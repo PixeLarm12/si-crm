@@ -37,4 +37,9 @@ class RatingController extends BaseController
 	{
 		return $this->defaultResponse($this->service->deleteRecord($id), Response::HTTP_NO_CONTENT);
 	}
+
+	public function recommend(string $id)
+	{
+		return $this->defaultResponse($this->service->recommend($id));
+	}
 }

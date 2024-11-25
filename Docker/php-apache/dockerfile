@@ -1,5 +1,5 @@
 # Defina o diretório público do Apache
-FROM php:apache
+FROM php:8.3-apache
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
@@ -27,8 +27,6 @@ RUN apt-get -y update && apt-get install -y libicu-dev libzip-dev zip libjpeg-de
     docker-php-ext-install intl opcache pdo_mysql zip gd
 
 RUN a2enmod rewrite
-
-
 
 # Instalar Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

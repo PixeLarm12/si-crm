@@ -12,6 +12,6 @@ class AssistanceSeeder extends Seeder
 	 */
 	public function run() : void
 	{
-		Assistance::factory()->count(10)->create();
+		Assistance::factory()->count(100)->create();
 	}
 }

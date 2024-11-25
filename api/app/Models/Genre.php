@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Genre extends Model
 {
@@ -16,8 +15,8 @@ class Genre extends Model
 		'title',
 	];
 
-	public function genres() : HasMany
+	public function products()
 	{
-		return $this->hasMany(Product::class, ProductGenre::class, 'genre_id');
+		return $this->belongsToMany(Product::class, 'products_genres', 'genre_id', 'product_id');
 	}
 }

@@ -79,6 +79,7 @@ Route::prefix(ProductEnum::ROUTE_PREFIX)->group(function () {
 Route::prefix(RatingEnum::ROUTE_PREFIX)->group(function () {
 	Route::get('/', [RatingController::class, 'index'])->name('ratings.index');
 	Route::get('/{id}', [RatingController::class, 'show'])->name('ratings.show');
+	Route::get('/recommend/{id}', [RatingController::class, 'recommend'])->name('ratings.recommend');
 	Route::post('/', [RatingController::class, 'store'])->name('ratings.store');
 	Route::put('/{id}', [RatingController::class, 'update'])->name('ratings.update');
 	Route::delete('/{id}', [RatingController::class, 'destroy'])->name('ratings.delete');

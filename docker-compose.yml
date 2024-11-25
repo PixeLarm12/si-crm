@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   php-apache:
     container_name: "${CONTAINER_NAME_PREFIX}-php"
@@ -10,6 +8,7 @@ services:
       - "80:80"
     networks:
       - crm-net
+
   db:
     container_name: "${CONTAINER_NAME_PREFIX}-database"
     image: mysql:latest
@@ -27,9 +26,22 @@ services:
     networks:
       - crm-net
 
+  flask-app:
+    container_name: "${CONTAINER_NAME_PREFIX}-flask"
+    build:
+      context: ./model
+      dockerfile: Dockerfile
+    volumes:
+      - ${PATH_TO_MODEL_CONTENT}:/app
+    ports:
+      - "5000:5000"
+    networks:
+      - crm-net
+    environment:
+      - FLASK_ENV=development
+
 volumes:
   db:
 
 networks:
   crm-net:
-    driver: bridge

@@ -28,7 +28,7 @@ class SaleFactory extends Factory
 	public function configure() : self
 	{
 		return $this->afterCreating(function ($sale) {
-			$sale->items()->createMany(SaleItem::factory()->count(2)->make()->toArray());
+			$sale->items()->createMany(SaleItem::factory()->count(random_int(1, 10))->make()->toArray());
 		});
 	}
 }
