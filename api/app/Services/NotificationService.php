@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\NotificationEnum;
 use App\Models\Notification;
 use App\Repositories\NotificationRepository;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class NotificationService extends BaseService
@@ -24,6 +25,7 @@ class NotificationService extends BaseService
 
 		return $notification->update([
 			'status' => NotificationEnum::STATUS_READ,
+			'check_date' => Carbon::now(),
 		]);
 	}
 
@@ -35,6 +37,8 @@ class NotificationService extends BaseService
 				'title'   => NotificationEnum::TITLE_NEW_PURCHASE,
 				'message' => NotificationEnum::MESSAGE_PURCHASE,
 				'type'    => NotificationEnum::TYPE_PURCHASE,
+				'date'    => Carbon::now(),
+				'status'  => NotificationEnum::STATUS_UNREAD,
 			]);
 		}
 
@@ -44,6 +48,8 @@ class NotificationService extends BaseService
 				'title'   => NotificationEnum::TITLE_NEW_RECOMMENDATION,
 				'message' => NotificationEnum::MESSAGE_RECOMMENDATION,
 				'type'    => NotificationEnum::TYPE_RECOMMENDATION,
+				'date'    => Carbon::now(),
+				'status'  => NotificationEnum::STATUS_UNREAD,
 			]);
 		}
 		
@@ -53,6 +59,8 @@ class NotificationService extends BaseService
 				'title'   => NotificationEnum::TITLE_NEW_PROBLEM,
 				'message' => NotificationEnum::MESSAGE_PROBLEM,
 				'type'    => NotificationEnum::TYPE_PROBLEM,
+				'date'    => Carbon::now(),
+				'status'  => NotificationEnum::STATUS_UNREAD,
 			]);
 		}
 	}
