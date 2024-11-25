@@ -12,7 +12,7 @@ class GenreSeeder extends Seeder
 	 */
 	public function run() : void
 	{
-		// Genre::factory()->count(5)->create();
+		// Genre::factory()->count(random_int(1, 20))->create();
 		$dataFromDataset = [
 			'Comedy',
 			'Drama',

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Genre;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +19,8 @@ class ProductGenreFactory extends Factory
 	public function definition() : array
 	{
 		return [
-			'product_id' => $this->faker->numberBetween(1, 10000),
-			'genre_id'   => $this->faker->numberBetween(1, 22),
+			'product_id' => Product::query()->inRandomOrder()->value('id'),
+			'genre_id'   => Genre::query()->inRandomOrder()->value('id'),
 		];
 	}
 }
