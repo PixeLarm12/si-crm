@@ -18,7 +18,7 @@ class AuthController extends BaseController
 		return $this->defaultResponse($this->service->login($request->getData()), Response::HTTP_FOUND);
 	}
 
-    public function logout()
+	public function logout()
 	{
 		return $this->defaultResponse($this->service->logout(), Response::HTTP_OK);
 	}

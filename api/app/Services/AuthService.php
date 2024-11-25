@@ -24,31 +24,31 @@ class AuthService extends BaseService
 	public function login(array $credentials) : string
 	{
 		if (!$token = JWTAuth::attempt($credentials)) {
-            throw new BadRequestException('User credentials do not match');
-        }
+			throw new BadRequestException('User credentials do not match');
+		}
 
 		$user = auth()->user();
 
 		return JWTAuth::claims(['role' => $user->role])->fromUser($user);
 	}
 
-    public function logout() : bool
+	public function logout() : bool
 	{
 		JWTAuth::invalidate(JWTAuth::getToken());
 
-        return true;
+		return true;
 	}
 
-	public function getUser(): mixed
-    {
-        try {
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['error' => 'User not found'], 404);
-            }
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'Invalid token'], 400);
-        }
+	public function getUser() : mixed
+	{
+		try {
+			if (!$user = JWTAuth::parseToken()->authenticate()) {
+				return response()->json(['error' => 'User not found'], 404);
+			}
+		} catch (JWTException $e) {
+			return response()->json(['error' => 'Invalid token'], 400);
+		}
 
-        return $user;
-    }
+		return $user;
+	}
 }

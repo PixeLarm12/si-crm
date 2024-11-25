@@ -18,7 +18,7 @@ class AuthRequest extends FormRequest
 	{
 		return [
 			'email.required'                => 'Email is required',
-			'password.required'      => 'Password is required',
+			'password.required'             => 'Password is required',
 			'password.min'                  => 'Password must have at least 8 characters',
 			'password.max'                  => 'Password cannot be longer than 60 characters',
 		];
@@ -27,8 +27,8 @@ class AuthRequest extends FormRequest
 	public function getData() : array
 	{
 		return [
-			'email'                => $this->input('email'),
-            'password'                => $this->input('password'),
+			'email'                   => $this->input('email'),
+			'password'                => $this->input('password'),
 		];
 	}
 }

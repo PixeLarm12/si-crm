@@ -13,7 +13,7 @@ class NotificationService extends BaseService
 		parent::__construct($repository);
 	}
 
-	public function checkNotification(string $id) 
+	public function checkNotification(string $id)
 	{
 		$notification = $this->findRecord($id);
 
@@ -22,7 +22,7 @@ class NotificationService extends BaseService
 		}
 
 		return $notification->update([
-			'status' => NotificationEnum::STATUS_READ
+			'status' => NotificationEnum::STATUS_READ,
 		]);
 	}
 }
