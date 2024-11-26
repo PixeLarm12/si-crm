@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\AIModelEnum;
+use App\Enums\NotificationEnum;
 
 class RecommendationService
 {
@@ -18,7 +19,7 @@ class RecommendationService
 		}
 	}
 
-	public function recommendForUser(array $data)
+	public function recommendForUser(array $data, int $userId)
 	{
 		$ch = curl_init();
 
@@ -42,6 +43,9 @@ class RecommendationService
 		}
 
 		curl_close($ch);
+
+		$notificationService = new NotificationService();
+		$notificationService->setNotification($userId, NotificationEnum::TYPE_RECOMMENDATION);
 
 		return json_decode($response, true);
 	}

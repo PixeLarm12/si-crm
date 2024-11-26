@@ -15,6 +15,12 @@ class Genre extends Model
 		'title',
 	];
 
+	protected $hidden = [
+		'created_at',
+		'updated_at',
+		'deleted_at',
+	];
+
 	public function products()
 	{
 		return $this->belongsToMany(Product::class, 'products_genres', 'genre_id', 'product_id');

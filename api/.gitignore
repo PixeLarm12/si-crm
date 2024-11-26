@@ -22,3 +22,4 @@ yarn-error.log
 /.zed
 .phplint.cache
 .php-cs-fixer.cache
+.idea

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\NotificationEnum;
 use App\Repositories\SaleRepository;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,9 +21,12 @@ class SaleService extends BaseService
 	 */
 	public function saveRecord(array $data) : Model
 	{
-		$sale = $this->repository->create($data);
+		$sale = parent::saveRecord($data);
 
 		$sale->items()->createMany($data['items']);
+
+		$notificationService = new NotificationService();
+		$notificationService->setNotification($data['user_id'], NotificationEnum::TYPE_PURCHASE);
 
 		return $sale;
 	}
@@ -34,8 +38,9 @@ class SaleService extends BaseService
 	 * @param array $data
 	 * @return Model
 	 */
-	public function updateRecord(int $id, array $data) : bool
+	public function updateRecord(int $id, array $data) : Model
 	{
+		$updated = parent::updateRecord($id, $data);
 		$sale = $this->repository->find($id);
 
 		$sale->update($data);
@@ -46,6 +51,6 @@ class SaleService extends BaseService
 			$sale->items()->createMany($data['items']);
 		}
 
-		return (bool) $sale;
+		return $updated;
 	}
 }

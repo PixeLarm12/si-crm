@@ -65,6 +65,6 @@ class RatingService extends BaseService
 			]);
 		}
 
-		return $this->recommendationService->recommendForUser($dataToRecommend);
+		return $this->recommendationService->recommendForUser($dataToRecommend, $user->id);
 	}
 }

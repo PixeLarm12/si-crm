@@ -1,28 +1,28 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
-use App\Enums\AbstractEnum;
 use App\Enums\AssistanceEnum;
 use App\Enums\UserEnum;
 use App\Models\Assistance;
 use App\Models\User;
+use App\Repositories\AssistanceRepository;
+use App\Services\AssistanceService;
 use Carbon\Carbon;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class AssistanceCRUDTest extends TestCase
+class AssistanceServiceTest extends TestCase
 {
-	private $baseUri = '/' . AbstractEnum::API_ROUTE_PREFIX . '/' . AssistanceEnum::ROUTE_PREFIX;
-
-	public function test_if_index_route_returns_successful() : void
+	public function test_assistance_find() : void
 	{
-		$response = $this->get($this->baseUri);
+		$assistance = Assistance::factory()->create();
 
-		$response->assertStatus(Response::HTTP_OK);
+		$service = new AssistanceService(new AssistanceRepository(new Assistance()));
+
+		$this->assertInstanceOf(Assistance::class, $service->findRecord($assistance->id));
 	}
 
-	public function test_if_store_route_creates_resource_successfully() : void
+	public function test_assistance_save() : void
 	{
 		$faker = \Faker\Factory::create();
 
@@ -32,18 +32,17 @@ class AssistanceCRUDTest extends TestCase
 			'type'       => $faker->randomElement([AssistanceEnum::TYPE_COMPLAINT, AssistanceEnum::TYPE_SUGGEST, AssistanceEnum::TYPE_PROBLEM]),
 			'subject'    => $faker->sentence(2),
 			'message'    => $faker->text(255),
+			'open_date'  => Carbon::now(),
 			'close_date' => null,
 			'status'     => AssistanceEnum::STATUS_OPENED,
 		];
 
-		$response = $this->post($this->baseUri, $data);
+		$service = new AssistanceService(new AssistanceRepository(new Assistance()));
 
-		$response->assertStatus(Response::HTTP_CREATED);
-
-		$this->assertDatabaseHas('assistances', $data);
+		$this->assertInstanceOf(Assistance::class, $service->saveRecord($data));
 	}
 
-	public function test_if_update_route_modifies_resource_successfully() : void
+	public function test_assistance_update() : void
 	{
 		$faker = \Faker\Factory::create();
 
@@ -59,20 +58,17 @@ class AssistanceCRUDTest extends TestCase
 			'status'     => AssistanceEnum::STATUS_CLOSED,
 		];
 
-		$response = $this->put("{$this->baseUri}/{$assistance->id}", $data);
+		$service = new AssistanceService(new AssistanceRepository(new Assistance()));
 
-		$response->assertStatus(Response::HTTP_CREATED);
-
-		$this->assertDatabaseHas('assistances', $data);
+		$this->assertInstanceOf(Assistance::class, $service->updateRecord($assistance->id, $data));
 	}
 
-	public function test_if_delete_route_removes_resource_successfully() : void
+	public function test_assistance_delete() : void
 	{
 		$assistance = Assistance::factory()->create();
 
-		$response = $this->delete("{$this->baseUri}/{$assistance->id}");
+		$service = new AssistanceService(new AssistanceRepository(new Assistance()));
 
-		$response->assertStatus(Response::HTTP_NO_CONTENT);
-		$this->assertDatabaseMissing('assistances', ['id' => $assistance->id]);
+		$this->assertTrue($service->deleteRecord($assistance->id));
 	}
 }

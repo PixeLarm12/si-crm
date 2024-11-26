@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Enums\LogEnum;
+use App\Models\Log;
 use App\Repositories\BaseRepository;
-use App\Repositories\GenreRepository;
-use Illuminate\Database\Eloquent\Collection;
+use DB;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseService
@@ -22,9 +24,9 @@ abstract class BaseService
 	/**
 	 * List all records from Repository.
 	 *
-	 * @return Collection
+	 * @return \Illuminate\Support\Collection
 	 */
-	public function getAllRecords() : Collection
+	public function getAllRecords() : \Illuminate\Support\Collection
 	{
 		return $this->repository->all();
 	}
@@ -37,7 +39,27 @@ abstract class BaseService
 	 */
 	public function saveRecord(array $data) : Model
 	{
-		return $this->repository->create($data);
+		DB::beginTransaction();
+
+		try {
+			$record = $this->repository->create($data);
+
+			Log::create([
+				'user_id'  => auth()->id(),
+				'action'   => LogEnum::CREATE,
+				'model'    => $this->repository->getModel(),
+				'model_id' => $record->id,
+				'data'     => json_encode($data),
+			]);
+
+			DB::commit();
+
+			return $record;
+		} catch (Exception $e) {
+			DB::rollback();
+
+			throw new Exception('An error occurred saving record ' . $e->getMessage());
+		}
 	}
 
 	/**
@@ -55,13 +77,32 @@ abstract class BaseService
 	 *
 	 * @param int $id
 	 * @param array $data
-	 * @return bool
+	 * @return Model
 	 */
-	public function updateRecord(int $id, array $data) : bool
+	public function updateRecord(int $id, array $data) : Model
 	{
-		$record = $this->repository->find($id);
+		DB::beginTransaction();
 
-		return $record->update($data);
+		try {
+			$record = $this->repository->find($id);
+			$record->update($data);
+
+			Log::create([
+				'user_id'  => auth()->id(),
+				'action'   => LogEnum::UPDATE,
+				'model'    => $this->repository->getModel(),
+				'model_id' => $id,
+				'data'     => json_encode($data),
+			]);
+
+			DB::commit();
+
+			return $record;
+		} catch (Exception $e) {
+			DB::rollback();
+
+			throw new Exception('An error occurred updating record ' . $e->getMessage());
+		}
 	}
 
 	/**
@@ -73,8 +114,28 @@ abstract class BaseService
 	 */
 	public function deleteRecord(int $id) : ?bool
 	{
-		$record = $this->repository->find($id);
+		DB::beginTransaction();
 
-		return $record->delete();
+		try {
+			Log::create([
+				'user_id'  => auth()->id(),
+				'action'   => LogEnum::DELETE,
+				'model'    => $this->repository->getModel(),
+				'model_id' => $id,
+				'data'     => json_encode([
+					'id' => $id,
+				]),
+			]);
+			$record = $this->repository->find($id);
+			$delete = $record->delete();
+
+			DB::commit();
+
+			return $delete;
+		} catch (Exception $e) {
+			DB::rollback();
+
+			throw new Exception('An error occurred deleting record ' . $e->getMessage());
+		}
 	}
 }

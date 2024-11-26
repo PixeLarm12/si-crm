@@ -10,14 +10,26 @@ use App\Models\Rating;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class RatingCRUDTest extends TestCase
+class RatingEndpointsTest extends TestCase
 {
 	private $baseUri = '/' . AbstractEnum::API_ROUTE_PREFIX . '/' . RatingEnum::ROUTE_PREFIX;
 
+	public function getToken()
+	{
+		$admin = User::factory()->create([
+			'role' => UserEnum::ADMIN,
+		]);
+
+		return JWTAuth::claims(['role' => $admin->role])->fromUser($admin);
+	}
+
 	public function test_if_index_route_returns_successful() : void
 	{
-		$response = $this->get($this->baseUri);
+		$response = $this->withHeaders([
+			'Authorization' => 'Bearer ' . $this->getToken(),
+		])->get($this->baseUri);
 
 		$response->assertStatus(Response::HTTP_OK);
 	}
@@ -32,7 +44,9 @@ class RatingCRUDTest extends TestCase
 			'rate'       => $faker->randomFloat(1, 1, 5),
 		];
 
-		$response = $this->post($this->baseUri, $data);
+		$response = $this->withHeaders([
+			'Authorization' => 'Bearer ' . $this->getToken(),
+		])->post($this->baseUri, $data);
 
 		$response->assertStatus(Response::HTTP_CREATED);
 
@@ -51,7 +65,9 @@ class RatingCRUDTest extends TestCase
 			'rate'       => $faker->randomFloat(1, 1, 5),
 		];
 
-		$response = $this->put("{$this->baseUri}/{$rating->id}", $data);
+		$response = $this->withHeaders([
+			'Authorization' => 'Bearer ' . $this->getToken(),
+		])->put("{$this->baseUri}/{$rating->id}", $data);
 
 		$response->assertStatus(Response::HTTP_CREATED);
 
@@ -62,7 +78,9 @@ class RatingCRUDTest extends TestCase
 	{
 		$rating = Rating::factory()->create();
 
-		$response = $this->delete("{$this->baseUri}/{$rating->id}");
+		$response = $this->withHeaders([
+			'Authorization' => 'Bearer ' . $this->getToken(),
+		])->delete("{$this->baseUri}/{$rating->id}");
 
 		$response->assertStatus(Response::HTTP_NO_CONTENT);
 		$this->assertDatabaseMissing('ratings', ['id' => $rating->id]);

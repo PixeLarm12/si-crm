@@ -20,7 +20,7 @@ class UserService extends BaseService
 	 */
 	public function saveRecord(array $data) : Model
 	{
-		$user = $this->repository->create($data);
+		$user = parent::saveRecord($data);
 
 		$user->phones()->createMany($data['phones']);
 
@@ -34,18 +34,17 @@ class UserService extends BaseService
 	 * @param array $data
 	 * @return Model
 	 */
-	public function updateRecord(int $id, array $data) : bool
+	public function updateRecord(int $id, array $data) : Model
 	{
-		$user = $this->repository->find($id);
+		$updated = parent::updateRecord($id, $data);
 
-		$user->update($data);
+		$user = $this->repository->find($id);
 
 		if ($data['phones']) {
 			$user->phones()->delete();
-
 			$user->phones()->createMany($data['phones']);
 		}
 
-		return (bool) $user;
+		return $updated;
 	}
 }
