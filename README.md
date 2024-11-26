@@ -1,5 +1,14 @@
-# CRM
-This is a CRM system made by students from UNESP Bauru, Information System's course.
+# Cine Choice
+This is a CRM system made by students from UNESP Bauru, Information System's course, called Cine Choice.
+
+Basically, the system are to buy movies and has the management of sales, products and an AI trained model to recommend movies to user based on their purchase history. In addition, the system have import, PDF reports and notifications
+
+Made by:
+Ana Beatriz Martins Ribeiro - 221022473
+Milena de Toledo Araujo - 221024743
+Lucas Ramos Domingues - 221025847
+Pedro Henrique Roratto - 221026932
+
 
 # Pay attention to
 
