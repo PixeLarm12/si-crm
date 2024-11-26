@@ -4,8 +4,6 @@ namespace App\Imports;
 
 use App\Enums\UserEnum;
 use App\Models\User;
-use DB;
-use Exception;
 use Hash;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
