@@ -51,6 +51,10 @@ Pedro Henrique Roratto - 221026932
 
 7. To exit bash, run `exit` at docker bash and then `docker-compose down` to turn off containers.
 
+# Testing
+
+To run tests, access docker bash by running `docker exec -it crm-php bash` and then run `php artisan test` to run all tests.
+
 # Laravel Code Design
 
 We are using **CSR pattern (Controller-Service-Repository pattern)** or **Service Layer Pattern** to handle with API Rest.
