@@ -30,7 +30,7 @@ class SaleServiceTest extends TestCase
 			'user_id'     => User::where('role', UserEnum::CLIENT)->first()->id,
 			'total_price' => $faker->randomFloat(2, 0.5, 3000),
 			'items'       => SaleItem::factory()->count(2)->make()->toArray(),
-			'date' => Carbon::now()
+			'date'        => Carbon::now(),
 		];
 
 		$service = new SaleService(new SaleRepository(new Sale()));
@@ -43,7 +43,7 @@ class SaleServiceTest extends TestCase
 		$faker = \Faker\Factory::create();
 
 		$sale = User::factory()->create();
-		
+
 		$data = [
 			'user_id'     => User::where('role', UserEnum::CLIENT)->first()->id,
 			'total_price' => $faker->randomFloat(2, 0.5, 3000),

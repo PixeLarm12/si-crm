@@ -30,7 +30,7 @@ class RatingServiceTest extends TestCase
 			'user_id'    => User::where('role', UserEnum::CLIENT)->first()->id,
 			'product_id' => Product::first()->id,
 			'rate'       => $faker->randomFloat(1, 1, 5),
-			'date' => Carbon::now()
+			'date'       => Carbon::now(),
 		];
 
 		$service = new RatingService(new RatingRepository(new Rating()));
@@ -43,7 +43,7 @@ class RatingServiceTest extends TestCase
 		$faker = \Faker\Factory::create();
 
 		$rating = Rating::factory()->create();
-		
+
 		$data = [
 			'user_id'    => $rating->user->id,
 			'product_id' => $rating->product->id,

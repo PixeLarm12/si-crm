@@ -24,14 +24,14 @@ class NotificationService extends BaseService
 		}
 
 		return $notification->update([
-			'status' => NotificationEnum::STATUS_READ,
+			'status'     => NotificationEnum::STATUS_READ,
 			'check_date' => Carbon::now(),
 		]);
 	}
 
 	public function setNotification(string $userId, string $type)
 	{
-		if($type == NotificationEnum::TYPE_PURCHASE) {
+		if ($type == NotificationEnum::TYPE_PURCHASE) {
 			$this->saveRecord([
 				'user_id' => $userId,
 				'title'   => NotificationEnum::TITLE_NEW_PURCHASE,
@@ -42,7 +42,7 @@ class NotificationService extends BaseService
 			]);
 		}
 
-		if($type == NotificationEnum::TYPE_RECOMMENDATION) {
+		if ($type == NotificationEnum::TYPE_RECOMMENDATION) {
 			$this->saveRecord([
 				'user_id' => $userId,
 				'title'   => NotificationEnum::TITLE_NEW_RECOMMENDATION,
@@ -52,8 +52,8 @@ class NotificationService extends BaseService
 				'status'  => NotificationEnum::STATUS_UNREAD,
 			]);
 		}
-		
-		if($type == NotificationEnum::TYPE_PROBLEM) {
+
+		if ($type == NotificationEnum::TYPE_PROBLEM) {
 			$this->saveRecord([
 				'user_id' => $userId,
 				'title'   => NotificationEnum::TITLE_NEW_PROBLEM,

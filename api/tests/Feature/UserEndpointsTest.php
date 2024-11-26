@@ -16,7 +16,7 @@ class UserEndpointsTest extends TestCase
 	public function getToken()
 	{
 		$admin = User::factory()->create([
-			'role' => UserEnum::ADMIN
+			'role' => UserEnum::ADMIN,
 		]);
 
 		return JWTAuth::claims(['role' => $admin->role])->fromUser($admin);
@@ -25,7 +25,7 @@ class UserEndpointsTest extends TestCase
 	public function test_if_index_route_returns_successful() : void
 	{
 		$response = $this->withHeaders([
-			'Authorization' => "Bearer " . $this->getToken(),
+			'Authorization' => 'Bearer ' . $this->getToken(),
 		])->get($this->baseUri);
 
 		$response->assertStatus(status: Response::HTTP_OK);
@@ -54,7 +54,7 @@ class UserEndpointsTest extends TestCase
 		];
 
 		$response = $this->withHeaders([
-			'Authorization' => "Bearer " . $this->getToken(),
+			'Authorization' => 'Bearer ' . $this->getToken(),
 		])->post($this->baseUri, $data);
 
 		$user = json_decode($response->content(), true);
@@ -102,7 +102,7 @@ class UserEndpointsTest extends TestCase
 		];
 
 		$response = $this->withHeaders([
-			'Authorization' => "Bearer " . $this->getToken(),
+			'Authorization' => 'Bearer ' . $this->getToken(),
 		])->put("{$this->baseUri}/{$user->id}", $data);
 
 		$response->assertStatus(Response::HTTP_CREATED);
@@ -115,9 +115,9 @@ class UserEndpointsTest extends TestCase
 	public function test_if_delete_route_removes_resource_successfully() : void
 	{
 		$user = User::factory()->create();
-		
+
 		$response = $this->withHeaders([
-			'Authorization' => "Bearer " . $this->getToken(),
+			'Authorization' => 'Bearer ' . $this->getToken(),
 		])->delete("{$this->baseUri}/{$user->id}");
 
 		$response->assertStatus(Response::HTTP_NO_CONTENT);

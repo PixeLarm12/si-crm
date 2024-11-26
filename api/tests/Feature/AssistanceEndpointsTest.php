@@ -19,7 +19,7 @@ class AssistanceEndpointsTest extends TestCase
 	public function getToken()
 	{
 		$admin = User::factory()->create([
-			'role' => UserEnum::ADMIN
+			'role' => UserEnum::ADMIN,
 		]);
 
 		return JWTAuth::claims(['role' => $admin->role])->fromUser($admin);
@@ -28,7 +28,7 @@ class AssistanceEndpointsTest extends TestCase
 	public function test_if_index_route_returns_successful() : void
 	{
 		$response = $this->withHeaders([
-			'Authorization' => "Bearer " . $this->getToken(),
+			'Authorization' => 'Bearer ' . $this->getToken(),
 		])->get($this->baseUri);
 
 		$response->assertStatus(Response::HTTP_OK);
@@ -49,7 +49,7 @@ class AssistanceEndpointsTest extends TestCase
 		];
 
 		$response = $this->withHeaders([
-			'Authorization' => "Bearer " . $this->getToken(),
+			'Authorization' => 'Bearer ' . $this->getToken(),
 		])->post($this->baseUri, $data);
 
 		$response->assertStatus(Response::HTTP_CREATED);
@@ -74,7 +74,7 @@ class AssistanceEndpointsTest extends TestCase
 		];
 
 		$response = $this->withHeaders([
-			'Authorization' => "Bearer " . $this->getToken(),
+			'Authorization' => 'Bearer ' . $this->getToken(),
 		])->put("{$this->baseUri}/{$assistance->id}", $data);
 
 		$response->assertStatus(Response::HTTP_CREATED);
@@ -87,7 +87,7 @@ class AssistanceEndpointsTest extends TestCase
 		$assistance = Assistance::factory()->create();
 
 		$response = $this->withHeaders([
-			'Authorization' => "Bearer " . $this->getToken(),
+			'Authorization' => 'Bearer ' . $this->getToken(),
 		])->delete("{$this->baseUri}/{$assistance->id}");
 
 		$response->assertStatus(Response::HTTP_NO_CONTENT);

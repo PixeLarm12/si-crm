@@ -40,7 +40,7 @@ class ProductServiceTest extends TestCase
 		$faker = \Faker\Factory::create();
 
 		$product = Product::factory()->create();
-		
+
 		$data = [
 			'title'  => $faker->sentence(2),
 			'price'  => $faker->randomFloat(2, 0.5, 3000),

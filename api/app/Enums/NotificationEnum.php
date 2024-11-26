@@ -19,12 +19,16 @@ class NotificationEnum extends AbstractEnum
 	public const TYPE_PROBLEM = 3;
 
 	// Default Title
-	public const TITLE_NEW_PURCHASE = "New purchase.";
-	public const TITLE_NEW_RECOMMENDATION = "Recommendation";
-	public const TITLE_NEW_PROBLEM = "Problem detected";
+	public const TITLE_NEW_PURCHASE = 'New purchase.';
+
+	public const TITLE_NEW_RECOMMENDATION = 'Recommendation';
+
+	public const TITLE_NEW_PROBLEM = 'Problem detected';
 
 	// Default Messages
-	public const MESSAGE_PURCHASE = "Your transaction was made.";
+	public const MESSAGE_PURCHASE = 'Your transaction was made.';
+
 	public const MESSAGE_RECOMMENDATION = "I guess you'll like these too...";
-	public const MESSAGE_PROBLEM = "Ops... Something went wrong.";
+
+	public const MESSAGE_PROBLEM = 'Ops... Something went wrong.';
 }

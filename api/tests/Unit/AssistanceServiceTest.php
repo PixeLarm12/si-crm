@@ -47,7 +47,7 @@ class AssistanceServiceTest extends TestCase
 		$faker = \Faker\Factory::create();
 
 		$assistance = Assistance::factory()->create();
-		
+
 		$data = [
 			'opened_by'  => $assistance->openedByUser->id,
 			'admin_id'   => $assistance->admin->id,

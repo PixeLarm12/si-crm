@@ -39,17 +39,17 @@ abstract class BaseService
 	 */
 	public function saveRecord(array $data) : Model
 	{
-		DB::beginTransaction(); 
-		
+		DB::beginTransaction();
+
 		try {
 			$record = $this->repository->create($data);
-			
+
 			Log::create([
-					'user_id'  => auth()->id(),
-					'action'   => LogEnum::CREATE,
-					'model'    => $this->repository->getModel(),
-					'model_id' => $record->id,
-					'data'     => json_encode($data),
+				'user_id'  => auth()->id(),
+				'action'   => LogEnum::CREATE,
+				'model'    => $this->repository->getModel(),
+				'model_id' => $record->id,
+				'data'     => json_encode($data),
 			]);
 
 			DB::commit();
@@ -81,8 +81,8 @@ abstract class BaseService
 	 */
 	public function updateRecord(int $id, array $data) : Model
 	{
-		DB::beginTransaction(); 
-		
+		DB::beginTransaction();
+
 		try {
 			$record = $this->repository->find($id);
 			$record->update($data);
@@ -114,8 +114,8 @@ abstract class BaseService
 	 */
 	public function deleteRecord(int $id) : ?bool
 	{
-		DB::beginTransaction(); 
-		
+		DB::beginTransaction();
+
 		try {
 			Log::create([
 				'user_id'  => auth()->id(),
@@ -130,7 +130,7 @@ abstract class BaseService
 			$delete = $record->delete();
 
 			DB::commit();
-			
+
 			return $delete;
 		} catch (Exception $e) {
 			DB::rollback();

@@ -13,7 +13,6 @@ class GenreServiceTest extends TestCase
 	{
 		$genre = Genre::factory()->create();
 
-
 		$service = new GenreService(new GenreRepository(new Genre()));
 
 		$this->assertInstanceOf(Genre::class, $service->findRecord($genre->id));
@@ -37,7 +36,7 @@ class GenreServiceTest extends TestCase
 		$faker = \Faker\Factory::create();
 
 		$genre = Genre::factory()->create();
-		
+
 		$data = [
 			'title' => $faker->sentence(2),
 		];

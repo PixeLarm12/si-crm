@@ -51,7 +51,7 @@ class UserServiceTest extends TestCase
 		$faker = \Faker\Factory::create();
 
 		$user = User::factory()->create();
-		
+
 		$data = [
 			'name'                  => $faker->name,
 			'email'                 => $faker->unique()->safeEmail,
