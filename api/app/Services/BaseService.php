@@ -58,7 +58,7 @@ abstract class BaseService
 		} catch (Exception $e) {
 			DB::rollback();
 
-			throw new Exception('An error occurred saving record');
+			throw new Exception('An error occurred saving record ' . $e->getMessage());
 		}
 	}
 
@@ -101,7 +101,7 @@ abstract class BaseService
 		} catch (Exception $e) {
 			DB::rollback();
 
-			throw new Exception('An error occurred updating record');
+			throw new Exception('An error occurred updating record ' . $e->getMessage());
 		}
 	}
 
@@ -135,7 +135,7 @@ abstract class BaseService
 		} catch (Exception $e) {
 			DB::rollback();
 
-			throw new Exception('An error occurred deleting record');
+			throw new Exception('An error occurred deleting record ' . $e->getMessage());
 		}
 	}
 }
