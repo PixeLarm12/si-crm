@@ -10,14 +10,26 @@ use App\Models\User;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class AssistanceCRUDTest extends TestCase
+class AssistanceEndpointsTest extends TestCase
 {
 	private $baseUri = '/' . AbstractEnum::API_ROUTE_PREFIX . '/' . AssistanceEnum::ROUTE_PREFIX;
 
+	public function getToken()
+	{
+		$admin = User::factory()->create([
+			'role' => UserEnum::ADMIN
+		]);
+
+		return JWTAuth::claims(['role' => $admin->role])->fromUser($admin);
+	}
+
 	public function test_if_index_route_returns_successful() : void
 	{
-		$response = $this->get($this->baseUri);
+		$response = $this->withHeaders([
+			'Authorization' => "Bearer " . $this->getToken(),
+		])->get($this->baseUri);
 
 		$response->assertStatus(Response::HTTP_OK);
 	}
@@ -36,7 +48,9 @@ class AssistanceCRUDTest extends TestCase
 			'status'     => AssistanceEnum::STATUS_OPENED,
 		];
 
-		$response = $this->post($this->baseUri, $data);
+		$response = $this->withHeaders([
+			'Authorization' => "Bearer " . $this->getToken(),
+		])->post($this->baseUri, $data);
 
 		$response->assertStatus(Response::HTTP_CREATED);
 
@@ -59,7 +73,9 @@ class AssistanceCRUDTest extends TestCase
 			'status'     => AssistanceEnum::STATUS_CLOSED,
 		];
 
-		$response = $this->put("{$this->baseUri}/{$assistance->id}", $data);
+		$response = $this->withHeaders([
+			'Authorization' => "Bearer " . $this->getToken(),
+		])->put("{$this->baseUri}/{$assistance->id}", $data);
 
 		$response->assertStatus(Response::HTTP_CREATED);
 
@@ -70,7 +86,9 @@ class AssistanceCRUDTest extends TestCase
 	{
 		$assistance = Assistance::factory()->create();
 
-		$response = $this->delete("{$this->baseUri}/{$assistance->id}");
+		$response = $this->withHeaders([
+			'Authorization' => "Bearer " . $this->getToken(),
+		])->delete("{$this->baseUri}/{$assistance->id}");
 
 		$response->assertStatus(Response::HTTP_NO_CONTENT);
 		$this->assertDatabaseMissing('assistances', ['id' => $assistance->id]);

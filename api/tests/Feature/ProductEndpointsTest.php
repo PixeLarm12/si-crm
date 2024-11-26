@@ -4,17 +4,31 @@ namespace Tests\Feature;
 
 use App\Enums\AbstractEnum;
 use App\Enums\ProductEnum;
+use App\Enums\UserEnum;
 use App\Models\Product;
+use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class ProductCRUDTest extends TestCase
+class ProductEndpointsTest extends TestCase
 {
 	private $baseUri = '/' . AbstractEnum::API_ROUTE_PREFIX . '/' . ProductEnum::ROUTE_PREFIX;
 
+	public function getToken()
+	{
+		$admin = User::factory()->create([
+			'role' => UserEnum::ADMIN
+		]);
+
+		return JWTAuth::claims(['role' => $admin->role])->fromUser($admin);
+	}
+
 	public function test_if_index_route_returns_successful() : void
 	{
-		$response = $this->get($this->baseUri);
+		$response = $this->withHeaders([
+			'Authorization' => "Bearer " . $this->getToken(),
+		])->get($this->baseUri);
 
 		$response->assertStatus(Response::HTTP_OK);
 	}
@@ -30,7 +44,9 @@ class ProductCRUDTest extends TestCase
 			'status' => $faker->randomElement([ProductEnum::STATUS_DRAFT, ProductEnum::STATUS_PUBLISHED]),
 		];
 
-		$response = $this->post($this->baseUri, $data);
+		$response = $this->withHeaders([
+			'Authorization' => "Bearer " . $this->getToken(),
+		])->post($this->baseUri, $data);
 
 		$response->assertStatus(Response::HTTP_CREATED);
 
@@ -50,7 +66,9 @@ class ProductCRUDTest extends TestCase
 			'status' => $faker->randomElement([ProductEnum::STATUS_DRAFT, ProductEnum::STATUS_PUBLISHED]),
 		];
 
-		$response = $this->put("{$this->baseUri}/{$product->id}", $data);
+		$response = $this->withHeaders([
+			'Authorization' => "Bearer " . $this->getToken(),
+		])->put("{$this->baseUri}/{$product->id}", $data);
 
 		$response->assertStatus(Response::HTTP_CREATED);
 
@@ -61,7 +79,9 @@ class ProductCRUDTest extends TestCase
 	{
 		$product = Product::factory()->create();
 
-		$response = $this->delete("{$this->baseUri}/{$product->id}");
+		$response = $this->withHeaders([
+			'Authorization' => "Bearer " . $this->getToken(),
+		])->delete("{$this->baseUri}/{$product->id}");
 
 		$response->assertStatus(Response::HTTP_NO_CONTENT);
 		$this->assertSoftDeleted('products', ['id' => $product->id]);

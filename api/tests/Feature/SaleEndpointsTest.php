@@ -10,14 +10,26 @@ use App\Models\SaleItem;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class SaleCRUDTest extends TestCase
+class SaleEndpointsTest extends TestCase
 {
 	private $baseUri = '/' . AbstractEnum::API_ROUTE_PREFIX . '/' . SaleEnum::ROUTE_PREFIX;
 
+	public function getToken()
+	{
+		$admin = User::factory()->create([
+			'role' => UserEnum::ADMIN
+		]);
+
+		return JWTAuth::claims(['role' => $admin->role])->fromUser($admin);
+	}
+
 	public function test_if_index_route_returns_successful() : void
 	{
-		$response = $this->get($this->baseUri);
+		$response = $this->withHeaders([
+			'Authorization' => "Bearer " . $this->getToken(),
+		])->get($this->baseUri);
 
 		$response->assertStatus(Response::HTTP_OK);
 	}
@@ -32,7 +44,9 @@ class SaleCRUDTest extends TestCase
 			'items'       => SaleItem::factory()->count(2)->make()->toArray(),
 		];
 
-		$response = $this->post($this->baseUri, $data);
+		$response = $this->withHeaders([
+			'Authorization' => "Bearer " . $this->getToken(),
+		])->post($this->baseUri, $data);
 
 		$response->assertStatus(Response::HTTP_CREATED);
 
@@ -53,7 +67,9 @@ class SaleCRUDTest extends TestCase
 			'items'       => SaleItem::factory()->count(2)->make()->toArray(),
 		];
 
-		$response = $this->put("{$this->baseUri}/{$sale->id}", $data);
+		$response = $this->withHeaders([
+			'Authorization' => "Bearer " . $this->getToken(),
+		])->put("{$this->baseUri}/{$sale->id}", $data);
 
 		$response->assertStatus(Response::HTTP_CREATED);
 
@@ -66,7 +82,9 @@ class SaleCRUDTest extends TestCase
 	{
 		$sale = Sale::factory()->create();
 
-		$response = $this->delete("{$this->baseUri}/{$sale->id}");
+		$response = $this->withHeaders([
+			'Authorization' => "Bearer " . $this->getToken(),
+		])->delete("{$this->baseUri}/{$sale->id}");
 
 		$response->assertStatus(Response::HTTP_NO_CONTENT);
 		$this->assertDatabaseMissing('sales', ['id' => $sale->id]);
